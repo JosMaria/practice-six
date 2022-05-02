@@ -8,12 +8,16 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import org.genesiscode.practicesix.service.ExerciseOne;
+import org.genesiscode.practicesix.view.row.RowInformation;
+import org.genesiscode.practicesix.view.row.RowResult;
 
 import java.util.List;
 
 public class ExerciseOnePane extends MyPane {
 
     private static ExerciseOnePane exerciseOnePane;
+    private final ExerciseOne exerciseOne;
 
     private TableView<RowResult> tableResult;
     private TableView<RowInformation> tableInformation;
@@ -21,6 +25,7 @@ public class ExerciseOnePane extends MyPane {
 
     private ExerciseOnePane() {
         super("EJERCICIO 1");
+        exerciseOne = new ExerciseOne();
         loadControls();
         buildPane();
     }
@@ -66,7 +71,8 @@ public class ExerciseOnePane extends MyPane {
 
         tableResult.getColumns().addAll(List.of(colOne, colTwo, colThree));
         tableResult.setMaxWidth(260);
-        tableResult.setMaxHeight(300);
+        tableResult.setMaxHeight(290);
+        tableResult.setItems(exerciseOne.buildRowsToStart());
     }
 
     private void buildTableInformation() {
@@ -90,12 +96,4 @@ public class ExerciseOnePane extends MyPane {
         tableInformation.setMaxWidth(500);
         tableInformation.setMaxHeight(300);
     }
-}
-
-record RowResult(int numberBall, double numberRandom, String color) {
-
-}
-
-record RowInformation(String color, double dProbability, double dAccumulated, String range) {
-
 }

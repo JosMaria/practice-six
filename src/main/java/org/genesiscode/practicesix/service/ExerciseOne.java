@@ -1,11 +1,18 @@
 package org.genesiscode.practicesix.service;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.genesiscode.practicesix.service.utils.Ball;
+import org.genesiscode.practicesix.view.row.RowResult;
 
 import java.util.List;
 
 public class ExerciseOne {
 
+    private static final List<Double> randomNumbers =
+            List.of(0.26, 0.42, 0.95, 0.95, 0.66, 0.17, 0.03, 0.56, 0.83, 0.55);
+
+    private final ObservableList<RowResult> rowsToResult = FXCollections.observableArrayList();
 
     public ExerciseOne() {
         Ball green = Ball.GREEN;
@@ -14,12 +21,14 @@ public class ExerciseOne {
 
     }
 
-
-    public List<Double> randomNumbersEntered() {
-        return List.of(0.26, 0.42, 0.95, 0.95, 0.66, 0.17, 0.03, 0.56, 0.83, 0.55);
+    public ObservableList<RowResult> buildRowsToStart() {
+        rowsToResult.clear();
+        int counter = 0;
+        for (double randomNumber : randomNumbers) {
+            rowsToResult.add(new RowResult(counter++, randomNumber, ""));
+        }
+        return rowsToResult;
     }
-
-
 
 //    private static final Random random = new Random();
 
@@ -37,8 +46,4 @@ public class ExerciseOne {
 
 //    }
 
-    public static void main(String[] args) {
-        ExerciseOne one = new ExerciseOne();
-        one.randomNumbersEntered().forEach(System.out::println);
-    }
 }
