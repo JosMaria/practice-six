@@ -2,14 +2,14 @@ package org.genesiscode.practicesix.view;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class WindowMain extends Application {
 
     @Override
     public void start(Stage stage) {
-        Scene scene = new Scene(new Label("Hello world"), 800, 500);
+        MenuBarPane menuBar = new MenuBarPane();
+        Scene scene = new Scene(menuBar.getMainPane(), 800, 500);
         stage.setTitle("Practica 6");
         stage.setScene(scene);
         stage.show();
