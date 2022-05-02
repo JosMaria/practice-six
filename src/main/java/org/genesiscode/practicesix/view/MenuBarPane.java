@@ -47,11 +47,11 @@ public class MenuBarPane implements EventHandler<ActionEvent> {
     public void handle(ActionEvent actionEvent) {
         MenuItem source = (MenuItem) actionEvent.getSource();
 
-        Label pane = switch (source.getText()) {
-            case EXERCISE_ONE -> new Label(EXERCISE_ONE);
-            case EXERCISE_TWO -> new Label(EXERCISE_TWO);
-            case EXERCISE_THREE -> new Label(EXERCISE_THREE);
-            default -> new Label("Empty");
+        VBox pane = switch (source.getText()) {
+            case EXERCISE_ONE -> ExerciseOnePane.getInstance().mainPane;
+            case EXERCISE_TWO -> ExerciseTwoPane.getInstance().mainPane;
+            case EXERCISE_THREE -> ExerciseThreePane.getInstance().mainPane;
+            default -> new VBox(new Label("Empty"));
         };
 
         changePane(new VBox(pane));
