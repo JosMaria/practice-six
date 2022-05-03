@@ -23,7 +23,7 @@ public class ExerciseOne {
         rowsToResult.clear();
         int counter = 0;
         for (double randomNumber : RANDOM_NUMBERS) {
-            rowsToResult.add(new RowResult(++counter, randomNumber, ""));
+            rowsToResult.add(new RowResult(++counter, randomNumber));
         }
         return rowsToResult;
     }
@@ -69,10 +69,12 @@ public class ExerciseOne {
         long countBallColorRed = getCountBallsByColor("rojo");
         long countBallColorYellow = getCountBallsByColor("amarillo");
 
-        return String.format("De las %s pelotas extraidas\n" +
-                        "- Verdes: %s\n" +
-                        "- Rojas: %s\n" +
-                        "- Amarillas: %s", rowsToResult.size(), countBallColorGreen, countBallColorRed, countBallColorYellow);
+        return String.format("""
+                De las %s pelotas extraidas
+                - Verdes: %s
+                - Rojas: %s
+                - Amarillas: %s""",
+                rowsToResult.size(), countBallColorGreen, countBallColorRed, countBallColorYellow);
     }
 
     public long getCountBallsByColor(String color) {

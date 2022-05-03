@@ -63,19 +63,11 @@ public class ExerciseOnePane extends MyPane {
     }
 
     private void buildTableResult() {
-        TableColumn<RowResult, Integer> colOne = new TableColumn<>("Número");
-        colOne.setCellValueFactory(new PropertyValueFactory<>("numberBall"));
-        colOne.setPrefWidth(90);
-
-        TableColumn<RowResult, Double> colTwo = new TableColumn<>("Número\nAleatorio");
-        colTwo.setCellValueFactory(new PropertyValueFactory<>("numberRandom"));
-        colTwo.setPrefWidth(90);
-
         TableColumn<RowResult, String> colThree = new TableColumn<>("Color");
         colThree.setCellValueFactory(new PropertyValueFactory<>("color"));
         colThree.setPrefWidth(90);
 
-        tableResult.getColumns().addAll(List.of(colOne, colTwo, colThree));
+        tableResult.getColumns().addAll(List.of(getColOne(), getColTwo(), colThree));
         tableResult.setMaxWidth(280);
         tableResult.setMaxHeight(300);
         tableResult.setItems(exerciseOne.buildRowsToStart());

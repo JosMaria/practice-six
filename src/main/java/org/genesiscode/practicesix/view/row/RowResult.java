@@ -6,10 +6,9 @@ public class RowResult {
     private final double numberRandom;
     private String color;
 
-    public RowResult(int numberBall, double numberRandom, String color) {
+    public RowResult(int numberBall, double numberRandom) {
         this.numberBall = numberBall;
         this.numberRandom = numberRandom;
-        this.color = color;
     }
 
     public int getNumberBall() {

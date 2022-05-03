@@ -9,8 +9,9 @@ public class WindowMain extends Application {
     @Override
     public void start(Stage stage) {
         MenuBarPane menuBar = new MenuBarPane();
-        Scene scene = new Scene(menuBar.getMainPane(), 800, 500);
+        Scene scene = new Scene(menuBar.getMainPane());
         stage.setTitle("Practica 6");
+        stage.setMaximized(true);
         stage.setScene(scene);
         stage.show();
     }
