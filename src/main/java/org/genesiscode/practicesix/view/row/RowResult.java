@@ -4,7 +4,7 @@ public class RowResult {
 
     private final int numberBall;
     private final double numberRandom;
-    private final String color;
+    private String color;
 
     public RowResult(int numberBall, double numberRandom, String color) {
         this.numberBall = numberBall;
@@ -22,5 +22,9 @@ public class RowResult {
 
     public String getColor() {
         return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

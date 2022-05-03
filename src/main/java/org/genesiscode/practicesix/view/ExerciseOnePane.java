@@ -45,6 +45,8 @@ public class ExerciseOnePane extends MyPane {
     }
 
     private void click_on_start() {
+        tableInformation.setItems(exerciseOne.buildDataToInformationTable());
+        exerciseOne.buildDataToResultTable();
     }
 
     private void buildPane() {
@@ -61,11 +63,11 @@ public class ExerciseOnePane extends MyPane {
         colOne.setCellValueFactory(new PropertyValueFactory<>("numberBall"));
         colOne.setPrefWidth(80);
 
-        TableColumn<RowResult, Integer> colTwo = new TableColumn<>("Número\nAleatorio");
+        TableColumn<RowResult, Double> colTwo = new TableColumn<>("Número\nAleatorio");
         colTwo.setCellValueFactory(new PropertyValueFactory<>("numberRandom"));
         colTwo.setPrefWidth(80);
 
-        TableColumn<RowResult, Integer> colThree = new TableColumn<>("Color");
+        TableColumn<RowResult, String> colThree = new TableColumn<>("Color");
         colThree.setCellValueFactory(new PropertyValueFactory<>("color"));
         colThree.setPrefWidth(100);
 
@@ -81,19 +83,19 @@ public class ExerciseOnePane extends MyPane {
         colOne.setPrefWidth(100);
 
         TableColumn<RowInformation, Double> colTwo = new TableColumn<>("Distribucion\nprobabilidad");
-        colTwo.setCellValueFactory(new PropertyValueFactory<>("dProbability"));
+        colTwo.setCellValueFactory(new PropertyValueFactory<>("probability"));
         colTwo.setPrefWidth(110);
 
         TableColumn<RowInformation, Double> colThree = new TableColumn<>("Distribucion\nacumulada");
-        colThree.setCellValueFactory(new PropertyValueFactory<>("dAccumulated"));
+        colThree.setCellValueFactory(new PropertyValueFactory<>("accumulated"));
         colThree.setPrefWidth(110);
 
         TableColumn<RowInformation, String> colFour = new TableColumn<>("Rango");
         colFour.setCellValueFactory(new PropertyValueFactory<>("range"));
-        colFour.setPrefWidth(180);
+        colFour.setPrefWidth(120);
 
         tableInformation.getColumns().addAll(List.of(colOne, colTwo, colThree, colFour));
-        tableInformation.setMaxWidth(500);
-        tableInformation.setMaxHeight(300);
+        tableInformation.setMaxWidth(490);
+        tableInformation.setMaxHeight(150);
     }
 }

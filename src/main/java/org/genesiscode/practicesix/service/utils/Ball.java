@@ -4,7 +4,7 @@ public enum Ball {
 
     GREEN("verde", 0.10),
     RED("rojo", 0.40),
-    YELLOW("amarrllo", 0.50);
+    YELLOW("amarrillo", 0.50);
 
     private final String name;
     private final double probability;
