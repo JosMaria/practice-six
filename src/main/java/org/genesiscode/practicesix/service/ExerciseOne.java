@@ -7,6 +7,7 @@ import org.genesiscode.practicesix.view.row.RowInformation;
 import org.genesiscode.practicesix.view.row.RowResult;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.genesiscode.practicesix.service.utils.Ball.*;
 
@@ -61,5 +62,22 @@ public class ExerciseOne {
 
     private boolean isInRange(RowInformation rowInformation, double probability) {
         return rowInformation.getRangeStart() <= probability && probability < rowInformation.getRangeEnd();
+    }
+
+    public String buildMessage() {
+        long countBallColorGreen = getCountBallsByColor("verde");
+        long countBallColorRed = getCountBallsByColor("rojo");
+        long countBallColorYellow = getCountBallsByColor("amarillo");
+
+        return String.format("De las %s pelotas extraidas\n" +
+                        "- Verdes: %s\n" +
+                        "- Rojas: %s\n" +
+                        "- Amarillas: %s", rowsToResult.size(), countBallColorGreen, countBallColorRed, countBallColorYellow);
+    }
+
+    public long getCountBallsByColor(String color) {
+        return rowsToResult.stream()
+                .filter(rowResult -> Objects.equals(rowResult.getColor(), color))
+                .count();
     }
 }

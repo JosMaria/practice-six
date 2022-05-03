@@ -21,7 +21,7 @@ public class ExerciseOnePane extends MyPane {
 
     private TableView<RowResult> tableResult;
     private TableView<RowInformation> tableInformation;
-    private Button btnStart;
+    private Button btnStart, btnShow;
 
     private ExerciseOnePane() {
         super("EJERCICIO 1");
@@ -37,6 +37,8 @@ public class ExerciseOnePane extends MyPane {
     private void loadControls() {
         btnStart = new Button("Empezar");
         btnStart.setOnAction(actionEvent -> click_on_start());
+        btnShow = new Button("Mostrar Mensaje");
+        btnShow.setOnAction(actionEvent -> MessageBox.show(exerciseOne.buildMessage(), "CONCLUSIÓN"));
 
         tableResult = new TableView<>();
         tableInformation = new TableView<>();
@@ -50,10 +52,12 @@ public class ExerciseOnePane extends MyPane {
     }
 
     private void buildPane() {
-        VBox resultPane = new VBox(20, tableResult, btnStart);
+        VBox resultPane = new VBox(20, tableResult, new HBox(20, btnStart, btnShow));
         resultPane.setAlignment(Pos.CENTER);
 
-        mainPane = new VBox(10, title, new HBox(10, resultPane, tableInformation));
+        HBox tablePane = new HBox(10, resultPane, tableInformation);
+        tablePane.setAlignment(Pos.CENTER);
+        mainPane = new VBox(10, title, tablePane);
         mainPane.setPadding(new Insets(10));
         mainPane.setAlignment(Pos.CENTER);
     }
@@ -61,19 +65,19 @@ public class ExerciseOnePane extends MyPane {
     private void buildTableResult() {
         TableColumn<RowResult, Integer> colOne = new TableColumn<>("Número");
         colOne.setCellValueFactory(new PropertyValueFactory<>("numberBall"));
-        colOne.setPrefWidth(80);
+        colOne.setPrefWidth(90);
 
         TableColumn<RowResult, Double> colTwo = new TableColumn<>("Número\nAleatorio");
         colTwo.setCellValueFactory(new PropertyValueFactory<>("numberRandom"));
-        colTwo.setPrefWidth(80);
+        colTwo.setPrefWidth(90);
 
         TableColumn<RowResult, String> colThree = new TableColumn<>("Color");
         colThree.setCellValueFactory(new PropertyValueFactory<>("color"));
-        colThree.setPrefWidth(100);
+        colThree.setPrefWidth(90);
 
         tableResult.getColumns().addAll(List.of(colOne, colTwo, colThree));
-        tableResult.setMaxWidth(260);
-        tableResult.setMaxHeight(290);
+        tableResult.setMaxWidth(280);
+        tableResult.setMaxHeight(300);
         tableResult.setItems(exerciseOne.buildRowsToStart());
     }
 
