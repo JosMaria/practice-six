@@ -39,17 +39,20 @@ public class ExerciseTwoPane extends MyPane {
         buildTableResult();
 
         dataTableOne = buildTableToData("Pintas\nSemana");
-        dataTableOne.setItems(exerciseTwo.getInformationTableOne());
+        dataTableOne.setItems(exerciseTwo.getDataTableOne());
 
         dataTableTwo = buildTableToData("Pacientes\nSemana");
-        dataTableTwo.setItems(exerciseTwo.getInformationTableTwo());
+        dataTableTwo.setItems(exerciseTwo.getDataTableTwo());
 
         dataTableThree = buildTableToData("Pintas");
-        dataTableThree.setItems(exerciseTwo.getInformationTableThree());
+        dataTableThree.setItems(exerciseTwo.getDataTableThree());
 
         infoTableOne = buildTableToInformation("Pintas");
         infoTableTwo = buildTableToInformation("Sangre");
         infoTableThree = buildTableToInformation("Pintas");
+        infoTableOne.setItems(exerciseTwo.getInfoTable(exerciseTwo.getDataToTableOne()));
+        infoTableTwo.setItems(exerciseTwo.getInfoTable(exerciseTwo.getDataToTableTwo()));
+        infoTableThree.setItems(exerciseTwo.getInfoTable(exerciseTwo.getDataToTableThree()));
     }
 
     private void buildPane() {
@@ -99,7 +102,7 @@ public class ExerciseTwoPane extends MyPane {
 
         TableView<RowInfoExerciseTwo> table = new TableView<>();
         table.getColumns().addAll(List.of(columnOne, columnTwo, columnThree, columnFour));
-        table.setMaxWidth(320);
+        table.setMinWidth(380);
         table.setMaxHeight(170);
         return table;
     }
