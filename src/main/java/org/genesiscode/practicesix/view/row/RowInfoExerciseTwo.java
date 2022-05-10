@@ -9,6 +9,14 @@ public class RowInfoExerciseTwo {
     private double rangeEnd;
     private final int data;
 
+    public double getRangeStart() {
+        return rangeStart;
+    }
+
+    public double getRangeEnd() {
+        return rangeEnd;
+    }
+
     public RowInfoExerciseTwo(double probability, double accumulated, String range, int data) {
         this.probability = probability;
         this.accumulated = accumulated;

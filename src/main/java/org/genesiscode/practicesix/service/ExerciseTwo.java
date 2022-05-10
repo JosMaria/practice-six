@@ -6,15 +6,16 @@ import org.genesiscode.practicesix.service.utils.Decimal;
 import org.genesiscode.practicesix.view.row.RowEnunciateTwo;
 import org.genesiscode.practicesix.view.row.RowInfoExerciseTwo;
 import org.genesiscode.practicesix.view.row.RowResult;
+import org.genesiscode.practicesix.view.row.RowResultToExerciseTwo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExerciseTwo {
 
-    private List<RowEnunciateTwo> dataToTableOne, dataToTableTwo, dataToTableThree;
-
     private List<Double> randomNumbers;
     private ObservableList<RowEnunciateTwo> dataTableOne, dataTableTwo, dataTableThree;
+    private List<RowEnunciateTwo> dataToTableOne, dataToTableTwo, dataToTableThree;
 
     public ExerciseTwo() {
         load();
@@ -64,6 +65,16 @@ public class ExerciseTwo {
         return observableList;
     }
 
+    private ObservableList<RowInfoExerciseTwo> listInfoToTableOne;
+    private ObservableList<RowInfoExerciseTwo> listInfoToTableTwo;
+    private ObservableList<RowInfoExerciseTwo> listInfoToTableThree;
+
+    public void loadTables() {
+        listInfoToTableOne = getInfoTable(dataTableOne);
+        listInfoToTableTwo = getInfoTable(dataTableTwo);
+        listInfoToTableThree = getInfoTable(dataTableThree);
+    }
+
     public ObservableList<RowInfoExerciseTwo> getInfoTable(List<RowEnunciateTwo> list) {
         ObservableList<RowInfoExerciseTwo> observableList = FXCollections.observableArrayList();
         double accumulated = 0.0;
@@ -82,6 +93,81 @@ public class ExerciseTwo {
             observableList.add(rowToAdded);
         }
         return observableList;
+    }
+
+    public static void main(String[] args) {
+        ExerciseTwo exerciseTwo = new ExerciseTwo();
+        exerciseTwo.buildRowToResult();
+    }
+
+    public ObservableList<RowResultToExerciseTwo> buildRowToResult() {
+        ObservableList<RowResultToExerciseTwo> rowsToResultFinal = FXCollections.observableArrayList();
+        loadTables();
+        int week = 1, initialInventory = 0, indexToNumber = 0;
+        while (indexToNumber < randomNumbers.size()) {
+            double randomNumberOne = randomNumbers.get(indexToNumber);
+            int pintsOne = getValueInInterval(listInfoToTableOne, randomNumberOne);
+            int totalAvailableBlood = initialInventory + pintsOne;
+            indexToNumber++;
+            double randomNumberTwo = randomNumbers.get(indexToNumber);
+            int numberOfPatients = getValueInInterval(listInfoToTableTwo, randomNumberTwo);
+            List<Integer> patients = sequenceNumber(numberOfPatients);
+            indexToNumber++;
+            List<Double> randomNumbersThree = getRandomNumbersByPatient(patients.size(), indexToNumber);
+            indexToNumber = indexToNumber + patients.size();
+
+            List<Integer> pints = new ArrayList<>();
+            for (Double numberRandom : randomNumbersThree) {
+                pints.add(getValueInInterval(listInfoToTableThree, numberRandom));
+            }
+
+            List<Integer> numberOfPintsRemaining = getNumberOfPintsRemaining(totalAvailableBlood, pints);
+            RowResultToExerciseTwo row = new RowResultToExerciseTwo(week, initialInventory, randomNumberOne,
+                                    pintsOne, totalAvailableBlood, randomNumberTwo, numberOfPatients, patients,
+                                    randomNumbersThree, pints, numberOfPintsRemaining);
+            rowsToResultFinal.add(row);
+            initialInventory = numberOfPintsRemaining.get(numberOfPintsRemaining.size() - 1);
+            week++;
+
+        }
+
+        rowsToResultFinal.forEach(System.out::println);
+        return rowsToResultFinal;
+    }
+
+    private List<Integer> getNumberOfPintsRemaining(int totalAvailableBlood, List<Integer> pints) {
+        ArrayList<Integer> pintsRemaining = new ArrayList<>();
+        if (pints.isEmpty()) {
+            pintsRemaining.add(totalAvailableBlood);
+        } else {
+            for (int pint : pints) {
+                totalAvailableBlood -= pint;
+                pintsRemaining.add(totalAvailableBlood);
+            }
+        }
+        return pintsRemaining;
+    }
+    private List<Double> getRandomNumbersByPatient(int count, int index) {
+        ArrayList<Double> list = new ArrayList<>();
+        for (int i = 0; i < count; i++, index++) {
+            list.add(randomNumbers.get(index));
+        }
+        return list;
+    }
+    private int getValueInInterval(ObservableList<RowInfoExerciseTwo> list, double randomNumber) {
+        return list.stream()
+                .filter(row -> row.getRangeStart() <= randomNumber && randomNumber < row.getRangeEnd())
+                .map(RowInfoExerciseTwo::getData)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("It does not exists in the interval"));
+    }
+
+    public static List<Integer> sequenceNumber(int length) {
+        List<Integer> list = new ArrayList<>();
+        for (int number = 1; number <= length; number++) {
+            list.add(number);
+        }
+        return list;
     }
 
     public ObservableList<RowEnunciateTwo> getDataTableOne() {

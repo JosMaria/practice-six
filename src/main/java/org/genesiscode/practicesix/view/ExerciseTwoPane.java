@@ -50,6 +50,11 @@ public class ExerciseTwoPane extends MyPane {
         infoTableOne = buildTableToInformation("Pintas");
         infoTableTwo = buildTableToInformation("Sangre");
         infoTableThree = buildTableToInformation("Pintas");
+
+        infoTableThree.getColumns()
+                .get(0)
+                .setStyle("-fx-background-color: lightgreen");
+
         infoTableOne.setItems(exerciseTwo.getInfoTable(exerciseTwo.getDataToTableOne()));
         infoTableTwo.setItems(exerciseTwo.getInfoTable(exerciseTwo.getDataToTableTwo()));
         infoTableThree.setItems(exerciseTwo.getInfoTable(exerciseTwo.getDataToTableThree()));
