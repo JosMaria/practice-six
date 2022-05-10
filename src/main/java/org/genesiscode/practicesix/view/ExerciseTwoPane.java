@@ -1,6 +1,7 @@
 package org.genesiscode.practicesix.view;
 
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -11,6 +12,7 @@ import org.genesiscode.practicesix.service.ExerciseTwo;
 import org.genesiscode.practicesix.view.row.RowEnunciateTwo;
 import org.genesiscode.practicesix.view.row.RowInfoExerciseTwo;
 import org.genesiscode.practicesix.view.row.RowResult;
+import org.genesiscode.practicesix.view.row.RowResultToExerciseTwo;
 
 import java.util.List;
 
@@ -22,6 +24,8 @@ public class ExerciseTwoPane extends MyPane {
     private TableView<RowResult> tableResult;
     private TableView<RowEnunciateTwo> dataTableOne, dataTableTwo, dataTableThree;
     private TableView<RowInfoExerciseTwo> infoTableOne, infoTableTwo, infoTableThree;
+    private TableView<RowResultToExerciseTwo> tableFinal;
+    private Button btnStart;
 
     private ExerciseTwoPane() {
         super("EJERCICIO 2");
@@ -37,6 +41,9 @@ public class ExerciseTwoPane extends MyPane {
     private void loadControls() {
         tableResult = new TableView<>();
         buildTableResult();
+        buildTableResultFinal();
+        btnStart = new Button("Empezar");
+        btnStart.setOnAction(actionEvent -> click_btn_start());
 
         dataTableOne = buildTableToData("Pintas\nSemana");
         dataTableOne.setItems(exerciseTwo.getDataTableOne());
@@ -51,13 +58,14 @@ public class ExerciseTwoPane extends MyPane {
         infoTableTwo = buildTableToInformation("Sangre");
         infoTableThree = buildTableToInformation("Pintas");
 
-        infoTableThree.getColumns()
-                .get(0)
-                .setStyle("-fx-background-color: lightgreen");
-
         infoTableOne.setItems(exerciseTwo.getInfoTable(exerciseTwo.getDataToTableOne()));
         infoTableTwo.setItems(exerciseTwo.getInfoTable(exerciseTwo.getDataToTableTwo()));
         infoTableThree.setItems(exerciseTwo.getInfoTable(exerciseTwo.getDataToTableThree()));
+    }
+
+    private void click_btn_start() {
+        tableFinal.setItems(exerciseTwo.buildRowToResult());
+        ExerciseTwoPaneAssistant.show(tableFinal);
     }
 
     private void buildPane() {
@@ -71,7 +79,7 @@ public class ExerciseTwoPane extends MyPane {
                 new VBox(10, new Label("Demanda por pacientes"), infoTableThree));
 
         VBox informationTablesPane = new VBox(10, firstTablesPane, secondTablesPane, thirdTablesPane);
-        mainPane = new VBox(10, title, new HBox(10, tableResult, informationTablesPane));
+        mainPane = new VBox(10, title, new HBox(10, new VBox(tableResult, btnStart), informationTablesPane));
         mainPane.setPadding(new Insets(10));
     }
 
@@ -112,8 +120,55 @@ public class ExerciseTwoPane extends MyPane {
         return table;
     }
 
-    private <T> TableColumn<RowInfoExerciseTwo, T> column(String titleColumn, String property, double prefSize) {
-        TableColumn<RowInfoExerciseTwo, T> column = new TableColumn<>(titleColumn);
+    private void buildTableResultFinal() {
+        TableColumn<RowResultToExerciseTwo, Integer> columnOne =
+                column("Semena", "week", 90);
+
+        TableColumn<RowResultToExerciseTwo, Integer> columnTwo =
+                column("Inventario\nInicial", "initialInventory", 90);
+
+        TableColumn<RowResultToExerciseTwo, Double> columnThree =
+                column("#aletorio", "randomNumberOne", 90);
+        columnThree.setStyle("-fx-background-color: yellow");
+
+        TableColumn<RowResultToExerciseTwo, Integer> columnFour =
+                column("Pintas", "pintsOne", 80);
+        columnFour.setStyle("-fx-background-color: yellow");
+
+        TableColumn<RowResultToExerciseTwo, Integer> columnFive =
+                column("Sangre\ndisponible\ntotal", "totalAvailableBlood", 100);
+
+        TableColumn<RowResultToExerciseTwo, Double> columnSix =
+                column("#aletorio", "randomNumberTwo", 90);
+        columnSix.setStyle("-fx-background-color: beige");
+
+        TableColumn<RowResultToExerciseTwo, Integer> columnSeven =
+                column("#Pacientes", "numberOfPatients", 90);
+        columnSeven.setStyle("-fx-background-color: beige");
+
+        TableColumn<RowResultToExerciseTwo, List<Integer>> columnEight =
+                column("#Nro de\npaciente", "numberOfPatient", 90);
+
+        TableColumn<RowResultToExerciseTwo, List<Double>> columnNine =
+                column("#aleatorio", "randomNumberThree", 150);
+        columnNine.setStyle("-fx-background-color: lightgreen");
+
+        TableColumn<RowResultToExerciseTwo, List<Integer>> columnTen =
+                column("Pintas", "pintsTwo", 90);
+        columnTen.setStyle("-fx-background-color: lightgreen");
+
+        TableColumn<RowResultToExerciseTwo, List<Integer>> columnEleven =
+                column("#Pintas\nrestantes", "numberOfPintsRemaining", 100);
+
+        tableFinal = new TableView<>();
+        tableFinal.getColumns().addAll(List.of(columnOne, columnTwo, columnThree, columnFour,
+                columnFive, columnSix, columnSeven, columnEight, columnNine, columnTen, columnEleven));
+        tableFinal.setMinWidth(990);
+        tableFinal.setMaxHeight(250);
+    }
+
+    private <U, T> TableColumn<U, T> column(String titleColumn, String property, double prefSize) {
+        TableColumn<U, T> column = new TableColumn<>(titleColumn);
         column.setCellValueFactory(new PropertyValueFactory<>(property));
         column.setPrefWidth(prefSize);
         return column;

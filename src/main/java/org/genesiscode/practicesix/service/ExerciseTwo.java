@@ -95,11 +95,6 @@ public class ExerciseTwo {
         return observableList;
     }
 
-    public static void main(String[] args) {
-        ExerciseTwo exerciseTwo = new ExerciseTwo();
-        exerciseTwo.buildRowToResult();
-    }
-
     public ObservableList<RowResultToExerciseTwo> buildRowToResult() {
         ObservableList<RowResultToExerciseTwo> rowsToResultFinal = FXCollections.observableArrayList();
         loadTables();
@@ -130,8 +125,6 @@ public class ExerciseTwo {
             week++;
 
         }
-
-        rowsToResultFinal.forEach(System.out::println);
         return rowsToResultFinal;
     }
 
@@ -162,7 +155,7 @@ public class ExerciseTwo {
                 .orElseThrow(() -> new IllegalArgumentException("It does not exists in the interval"));
     }
 
-    public static List<Integer> sequenceNumber(int length) {
+    public List<Integer> sequenceNumber(int length) {
         List<Integer> list = new ArrayList<>();
         for (int number = 1; number <= length; number++) {
             list.add(number);
