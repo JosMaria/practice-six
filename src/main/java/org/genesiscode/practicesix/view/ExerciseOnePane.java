@@ -2,9 +2,7 @@ package org.genesiscode.practicesix.view;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -22,6 +20,8 @@ public class ExerciseOnePane extends MyPane {
     private TableView<RowResult> tableResult;
     private TableView<RowInformation> tableInformation;
     private Button btnStart, btnShow;
+    private TextField txtNumbers;
+    private Label lblNumbers;
 
     private ExerciseOnePane() {
         super("EJERCICIO 1");
@@ -44,6 +44,11 @@ public class ExerciseOnePane extends MyPane {
         tableInformation = new TableView<>();
         buildTableResult();
         buildTableInformation();
+
+        lblNumbers = new Label("Introducir números");
+        txtNumbers = new TextField();
+        txtNumbers.setPrefColumnCount(20);
+
     }
 
     private void click_on_start() {
@@ -55,7 +60,8 @@ public class ExerciseOnePane extends MyPane {
         VBox resultPane = new VBox(20, tableResult, new HBox(20, btnStart, btnShow));
         resultPane.setAlignment(Pos.CENTER);
 
-        HBox tablePane = new HBox(10, resultPane, tableInformation);
+        VBox inputPane = new VBox(10, lblNumbers, txtNumbers);
+        HBox tablePane = new HBox(10, resultPane, new VBox(40, inputPane, tableInformation));
         tablePane.setAlignment(Pos.CENTER);
         mainPane = new VBox(10, title, tablePane);
         mainPane.setPadding(new Insets(10));
