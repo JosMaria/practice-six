@@ -7,6 +7,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.genesiscode.practicesix.service.ExerciseOne;
+import org.genesiscode.practicesix.service.utils.Util;
 import org.genesiscode.practicesix.view.row.RowInformation;
 import org.genesiscode.practicesix.view.row.RowResult;
 
@@ -19,7 +20,7 @@ public class ExerciseOnePane extends MyPane {
 
     private TableView<RowResult> tableResult;
     private TableView<RowInformation> tableInformation;
-    private Button btnStart, btnShow;
+    private Button btnStart, btnShow, btnLoadData;
     private TextField txtNumbers;
     private Label lblNumbers;
 
@@ -39,11 +40,14 @@ public class ExerciseOnePane extends MyPane {
         btnStart.setOnAction(actionEvent -> click_on_start());
         btnShow = new Button("Mostrar Mensaje");
         btnShow.setOnAction(actionEvent -> MessageBox.show(exerciseOne.buildMessage(), "CONCLUSIÓN"));
+        btnLoadData = new Button("Cargar Datos");
+        btnLoadData.setOnAction(actionEvent -> click_on_loadData());
 
         tableResult = new TableView<>();
         tableInformation = new TableView<>();
         buildTableResult();
         buildTableInformation();
+        tableInformation.setItems(exerciseOne.buildDataToInformationTable());
 
         lblNumbers = new Label("Introducir números");
         txtNumbers = new TextField();
@@ -51,8 +55,12 @@ public class ExerciseOnePane extends MyPane {
 
     }
 
+    private void click_on_loadData() {
+        List<Double> randomNumbers = Util.convertToList(txtNumbers.getText());
+        tableResult.setItems(exerciseOne.buildRowsToStart(randomNumbers));
+    }
+
     private void click_on_start() {
-        tableInformation.setItems(exerciseOne.buildDataToInformationTable());
         exerciseOne.buildDataToResultTable();
     }
 
@@ -60,7 +68,7 @@ public class ExerciseOnePane extends MyPane {
         VBox resultPane = new VBox(20, tableResult, new HBox(20, btnStart, btnShow));
         resultPane.setAlignment(Pos.CENTER);
 
-        VBox inputPane = new VBox(10, lblNumbers, txtNumbers);
+        VBox inputPane = new VBox(10, lblNumbers, txtNumbers, btnLoadData);
         HBox tablePane = new HBox(10, resultPane, new VBox(40, inputPane, tableInformation));
         tablePane.setAlignment(Pos.CENTER);
         mainPane = new VBox(10, title, tablePane);
@@ -76,7 +84,6 @@ public class ExerciseOnePane extends MyPane {
         tableResult.getColumns().addAll(List.of(getColOne(), getColTwo(), colThree));
         tableResult.setMaxWidth(280);
         tableResult.setMaxHeight(300);
-        tableResult.setItems(exerciseOne.buildRowsToStart());
     }
 
     private void buildTableInformation() {
