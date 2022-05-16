@@ -13,7 +13,6 @@ import static org.genesiscode.practicesix.service.utils.Ball.*;
 
 public class ExerciseOne {
 
-//    private static final List<Double> RANDOM_NUMBERS = List.of(0.26, 0.42, 0.95, 0.95, 0.66, 0.17, 0.03, 0.56, 0.83, 0.55);
     private static final List<Ball> BALLS = List.of(GREEN, RED, YELLOW);
 
     private final ObservableList<RowResult> rowsToResult = FXCollections.observableArrayList();

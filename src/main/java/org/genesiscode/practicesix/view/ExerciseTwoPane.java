@@ -1,14 +1,13 @@
 package org.genesiscode.practicesix.view;
 
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.genesiscode.practicesix.service.ExerciseTwo;
+import org.genesiscode.practicesix.service.utils.Util;
 import org.genesiscode.practicesix.view.row.RowEnunciateTwo;
 import org.genesiscode.practicesix.view.row.RowInfoExerciseTwo;
 import org.genesiscode.practicesix.view.row.RowResult;
@@ -25,7 +24,9 @@ public class ExerciseTwoPane extends MyPane {
     private TableView<RowEnunciateTwo> dataTableOne, dataTableTwo, dataTableThree;
     private TableView<RowInfoExerciseTwo> infoTableOne, infoTableTwo, infoTableThree;
     private TableView<RowResultToExerciseTwo> tableFinal;
-    private Button btnStart;
+    private Button btnStart, btnLoadData;
+    private TextField txtNumbers;
+    private Label lblNumbers;
 
     private ExerciseTwoPane() {
         super("EJERCICIO 2");
@@ -44,6 +45,12 @@ public class ExerciseTwoPane extends MyPane {
         buildTableResultFinal();
         btnStart = new Button("Empezar");
         btnStart.setOnAction(actionEvent -> click_btn_start());
+
+        lblNumbers = new Label("Introducir números");
+        txtNumbers = new TextField();
+        txtNumbers.setPrefColumnCount(20);
+        btnLoadData = new Button("Cargar Datos");
+        btnLoadData.setOnAction(actionEvent -> click_on_loadData());
 
         dataTableOne = buildTableToData("Pintas\nSemana");
         dataTableOne.setItems(exerciseTwo.getDataTableOne());
@@ -64,22 +71,34 @@ public class ExerciseTwoPane extends MyPane {
     }
 
     private void click_btn_start() {
-        tableFinal.setItems(exerciseTwo.buildRowToResult());
-        ExerciseTwoPaneAssistant.show(tableFinal);
+        try {
+            tableFinal.setItems(exerciseTwo.buildRowToResult());
+        } catch (IllegalArgumentException e) {
+            MessageBox.show(e.getMessage(), "Entrada no valida");
+        }
+        ExerciseTwoPaneAssistant.show(infoTableOne, infoTableTwo, infoTableThree, tableFinal);
+    }
+
+    private void click_on_loadData() {
+        try {
+            List<Double> data = Util.convertToList(txtNumbers.getText());
+            tableResult.setItems(exerciseTwo.buildRowsToStart(data));
+        } catch (NumberFormatException e) {
+            MessageBox.show("Introducir numeros", "Entrada no valida");
+        }
     }
 
     private void buildPane() {
-        HBox firstTablesPane = new HBox(20, new VBox(10, new Label("Cantidades Suministradas"), dataTableOne),
-                new VBox(10, new Label("Cantidad Suministradas / Entrega"), infoTableOne));
+        VBox inputTablePane = new VBox(10, tableResult, btnStart);
 
-        HBox secondTablesPane = new HBox(20, new VBox(10, new Label("Distribución de pacientes"), dataTableTwo),
-                new VBox(10, new Label("Distribución de pacientes / Número de pacientes"), infoTableTwo));
+        HBox dataTablePane = new HBox(10,
+                new VBox(10, new Label("Cantidades Suministradas"), dataTableOne),
+                new VBox(10, new Label("Distribución de pacientes"), dataTableTwo),
+                new VBox(10, new Label("Demanda por pacientes"), dataTableThree));
+        VBox inputPane = new VBox(30, new VBox(10, lblNumbers, txtNumbers, btnLoadData), dataTablePane);
 
-        HBox thirdTablesPane = new HBox(20, new VBox(10, new Label("Demanda por pacientes"), dataTableThree),
-                new VBox(10, new Label("Demanda por pacientes"), infoTableThree));
-
-        VBox informationTablesPane = new VBox(10, firstTablesPane, secondTablesPane, thirdTablesPane);
-        mainPane = new VBox(10, title, new HBox(10, new VBox(tableResult, btnStart), informationTablesPane));
+        mainPane = new VBox(10, title, new HBox(20, inputTablePane, inputPane));
+        mainPane.setAlignment(Pos.CENTER);
         mainPane.setPadding(new Insets(10));
     }
 
@@ -87,7 +106,6 @@ public class ExerciseTwoPane extends MyPane {
         tableResult.getColumns().addAll(List.of(getColOne(), getColTwo()));
         tableResult.setMaxWidth(200);
         tableResult.setMaxHeight(320);
-        tableResult.setItems(exerciseTwo.buildRowsToStart());
     }
 
     private TableView<RowEnunciateTwo> buildTableToData(String titleColumnOne) {
@@ -102,7 +120,7 @@ public class ExerciseTwoPane extends MyPane {
         TableView<RowEnunciateTwo> table = new TableView<>();
         table.getColumns().addAll(List.of(colOne, colTwo));
         table.setMaxWidth(200);
-        table.setMaxHeight(170);
+        table.setMaxHeight(185);
 
         return table;
     }

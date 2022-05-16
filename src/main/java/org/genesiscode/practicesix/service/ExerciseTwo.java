@@ -21,7 +21,11 @@ public class ExerciseTwo {
         load();
     }
 
-    public ObservableList<RowResult> buildRowsToStart() {
+    public ObservableList<RowResult> buildRowsToStart(List<Double> randomNumbers) throws IllegalArgumentException{
+        this.randomNumbers = randomNumbers;
+        if (randomNumbers.isEmpty()) {
+            throw new IllegalArgumentException("Introducir numeros");
+        }
         ObservableList<RowResult> rowsToResult = FXCollections.observableArrayList();
         int counter = 0;
         for (double randomNumber : randomNumbers) {
@@ -31,9 +35,6 @@ public class ExerciseTwo {
     }
 
     private void load() {
-        randomNumbers = List.of(0.74, 0.85, 0.21, 0.06, 0.71, 0.31, 0.28, 0.96, 0.02,
-                0.72, 0.12, 0.67, 0.53, 0.44, 0.23, 0.16, 0.16, 0.40, 0.83, 0.65, 0.34, 0.82);
-
         dataToTableOne = List.of(
                 new RowEnunciateTwo(4, 0.15),
                 new RowEnunciateTwo(5, 0.20),
