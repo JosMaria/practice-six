@@ -17,7 +17,7 @@ public class ExerciseThreePane extends MyPane {
     private final ExerciseThree exerciseThree;
     private TableView<RowInfoExerciseThree> tableInfoStart;
 
-    private Label lblSalesPerWeek, lblNumberOfWeek;
+    private Label lblSalesPerWeek, lblNumberOfWeek, lblTotalNumberOfWeek;
     private TextField txtSalesPerWeek, txtNumberOfWeek;
     private Button btnLoadData, btnClear;
 
@@ -44,7 +44,7 @@ public class ExerciseThreePane extends MyPane {
         btnLoadData.setOnAction(actionEvent -> click_btn_load_data());
         btnClear = new Button("Limpiar");
         btnClear.setOnAction(actionEvent -> click_btn_clear());
-
+        lblTotalNumberOfWeek = new Label("Total: ");
         // table
         tableInfoStart = new TableView<>();
         buildTableInfoStart();
@@ -61,6 +61,7 @@ public class ExerciseThreePane extends MyPane {
         exerciseThree.addItemToListToTableInfoStart(salesPerWeek, numberOfWeek);
         txtSalesPerWeek.setText("");
         txtNumberOfWeek.setText("");
+        lblTotalNumberOfWeek.setText(lblTotalNumberOfWeek.getText().substring(0, 7) + exerciseThree.totalNumberOfWeeks());
     }
 
     private void buildTableInfoStart() {
@@ -79,9 +80,10 @@ public class ExerciseThreePane extends MyPane {
         VBox inputDataPane = new VBox(10, new HBox(10, lblSalesPerWeek, txtSalesPerWeek),
                 new HBox(10, lblNumberOfWeek, txtNumberOfWeek),
                 new HBox(10, btnLoadData, btnClear),
-                tableInfoStart);
-
+                tableInfoStart, lblTotalNumberOfWeek);
         inputDataPane.setFillWidth(false);
+        //inputDataPane.setAlignment(Pos.CENTER);
+
         mainPane = new VBox(10, new VBox(title, inputDataPane));
         mainPane.setAlignment(Pos.CENTER);
         mainPane.setPadding(new Insets(20));

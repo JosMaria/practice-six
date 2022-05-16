@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.genesiscode.practicesix.view.row.exerciseThree.RowInfoExerciseThree;
 
+import java.util.List;
+
 public class ExerciseThree {
 
     private final ObservableList<RowInfoExerciseThree> listToTableInfoStart;
@@ -23,5 +25,17 @@ public class ExerciseThree {
 
     public ObservableList<RowInfoExerciseThree> getListToTableInfoStart() {
         return listToTableInfoStart;
+    }
+
+    public int totalNumberOfWeeks() {
+        List<Integer> list = listToTableInfoStart.stream()
+                .map(RowInfoExerciseThree::getNumberOfWeek)
+                .toList();
+
+        int counter = 0;
+        for (int number : list) {
+            counter += number;
+        }
+        return counter;
     }
 }
