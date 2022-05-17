@@ -1,5 +1,6 @@
 package org.genesiscode.practicesix.view;
 
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -10,6 +11,7 @@ import org.genesiscode.practicesix.service.ExerciseThree;
 import org.genesiscode.practicesix.service.utils.Util;
 import org.genesiscode.practicesix.view.row.RowEnunciateTwo;
 import org.genesiscode.practicesix.view.row.exerciseThree.RowInfoExerciseThree;
+import org.genesiscode.practicesix.view.row.exerciseThree.RowResultExerciseThree;
 
 import java.util.List;
 
@@ -19,8 +21,9 @@ public class ExerciseThreePane extends MyPane {
     private final ExerciseThree exerciseThree;
     private TableView<RowInfoExerciseThree> tableInfoStart;
     private TableView<RowEnunciateTwo> tableEnunciateThree;
+    private TableView<RowResultExerciseThree> tableResultThree;
 
-    private Label lblSalesPerWeek, lblNumberOfWeek, lblTotalNumberOfWeek, lblNumbers;
+    private Label lblSalesPerWeek, lblNumberOfWeek, lblTotalNumberOfWeek, lblNumbers, lblResultTotal;
     private TextField txtSalesPerWeek, txtNumberOfWeek, txtRandomNumbers;
     private Button btnLoadData, btnClear, btnLoadNumbers, btnStart;
 
@@ -65,11 +68,19 @@ public class ExerciseThreePane extends MyPane {
 
         btnStart = new Button("Empezar");
         btnStart.setOnAction(actionEvent -> click_btn_start());
+
+        tableResultThree = new TableView<>();
+        buildTableResultThree();
+        lblResultTotal = new Label("TOTAL ");
     }
 
     private void click_btn_start() {
         exerciseThree.addProbabilityToTableInfoStart();
-        System.out.println("click on btn start");
+        tableResultThree.setItems(exerciseThree.buildTableResult());
+        ExerciseThreePaneAssistant.show(tableResultThree);
+        ObservableList<RowEnunciateTwo> items = tableEnunciateThree.getItems();
+        exerciseThree.addSalesTableEnunciateThree(items, tableResultThree.getItems());
+        lblResultTotal.setText("TOTAL " + exerciseThree.getResultTotal());
     }
 
     private void click_on_load_numbers() {
@@ -108,11 +119,28 @@ public class ExerciseThreePane extends MyPane {
 
     private void buildTableEnunciateThree() {
         TableColumn<RowEnunciateTwo, Integer> colNumberRow =
-                column("Fila", "information", 100);
+                column("Fila", "information", 60);
         TableColumn<RowEnunciateTwo, Double> colProbability =
                 column("Numeros\nAleatorios", "probability", 100);
+        TableColumn<RowEnunciateTwo, Integer> colSales =
+                column("Ventas de\nCalentadores", "sales", 110);
 
-        tableEnunciateThree.getColumns().addAll(List.of(colNumberRow, colProbability));
+        tableEnunciateThree.getColumns().addAll(List.of(colNumberRow, colProbability, colSales));
+    }
+
+    private void buildTableResultThree() {
+        TableColumn<RowResultExerciseThree, Double> colProbability =
+                column("Probabilidad", "probability", 100);
+        TableColumn<RowResultExerciseThree, Double> colAccumulatedDistribution =
+                column("Distribucion\nAcumulada", "accumulatedDistribution", 100);
+        TableColumn<RowResultExerciseThree, String> colRangeRandomNumbers =
+                column("Rango de #s\naleatorios", "rangeRandomNumbers", 120);
+        TableColumn<RowResultExerciseThree, Integer> colSales =
+                column("Ventas", "sales", 90);
+
+        tableResultThree.getColumns().addAll(
+                List.of(colProbability, colAccumulatedDistribution, colRangeRandomNumbers, colSales));
+        tableResultThree.setMaxHeight(500);
     }
 
     private void buildPane() {
@@ -125,7 +153,7 @@ public class ExerciseThreePane extends MyPane {
 
         VBox numbersRandomPane = new VBox(20,
                 new VBox(10, lblNumbers, txtRandomNumbers, btnLoadNumbers),
-                tableEnunciateThree, btnStart);
+                tableEnunciateThree, new HBox(50, btnStart, lblResultTotal));
         numbersRandomPane.setFillWidth(false);
 
         mainPane = new VBox(10, new VBox(title, new HBox(20, inputDataPane, numbersRandomPane)));

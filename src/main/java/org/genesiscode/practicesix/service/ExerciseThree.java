@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import org.genesiscode.practicesix.service.utils.Decimal;
 import org.genesiscode.practicesix.view.row.RowEnunciateTwo;
 import org.genesiscode.practicesix.view.row.exerciseThree.RowInfoExerciseThree;
+import org.genesiscode.practicesix.view.row.exerciseThree.RowResultExerciseThree;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -12,15 +13,17 @@ import java.util.function.Consumer;
 public class ExerciseThree {
 
     private final ObservableList<RowInfoExerciseThree> listToTableInfoStart;
-    private List<Double> randomNumbers;
-    private int total;
+    private int total, resultTotal;
 
     public ExerciseThree() {
         listToTableInfoStart = FXCollections.observableArrayList();
     }
 
+    public int getResultTotal() {
+        return resultTotal;
+    }
+
     public ObservableList<RowEnunciateTwo> buildTableEnunciateThree(List<Double> data) {
-        randomNumbers = data;
         ObservableList<RowEnunciateTwo> rows = FXCollections.observableArrayList();
         int counter = 1;
         for (double randomNumber : data) {
@@ -41,6 +44,41 @@ public class ExerciseThree {
 
     public ObservableList<RowInfoExerciseThree> getListToTableInfoStart() {
         return listToTableInfoStart;
+    }
+
+    public ObservableList<RowResultExerciseThree> buildTableResult() {
+        ObservableList<RowResultExerciseThree> list = FXCollections.observableArrayList();
+        double accumulated = 0.0;
+        for (RowInfoExerciseThree row : listToTableInfoStart) {
+            double probability = row.getProbability();
+            double rangeStart = accumulated;
+            accumulated += probability;
+            accumulated = Decimal.getDecimal(2, accumulated);
+            double rangeEnd = accumulated;
+            String range = String.format("[%s - %s)", rangeStart, rangeEnd);
+            RowResultExerciseThree rowToAdded =
+                    new RowResultExerciseThree(probability, accumulated, range, row.getSalesPerWeek());
+            rowToAdded.setStartRange(rangeStart);
+            rowToAdded.setEndRange(rangeEnd);
+            list.add(rowToAdded);
+        }
+        return list;
+    }
+
+    public void addSalesTableEnunciateThree(ObservableList<RowEnunciateTwo> items, ObservableList<RowResultExerciseThree> listRange) {
+        int total = 0;
+        for (RowEnunciateTwo item : items) {
+            RowResultExerciseThree element = listRange.stream()
+                    .filter(row -> {
+                        double probability = item.getProbability();
+                        return row.getStartRange() <= probability && probability < row.getEndRange();
+                    })
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("Not found"));
+            item.setSales(element.getSales());
+            total += element.getSales();
+        }
+        resultTotal = total;
     }
 
     public int totalNumberOfWeeks() {
