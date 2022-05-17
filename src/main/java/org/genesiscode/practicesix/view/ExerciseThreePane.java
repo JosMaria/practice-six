@@ -7,6 +7,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.genesiscode.practicesix.service.ExerciseThree;
+import org.genesiscode.practicesix.service.utils.Util;
+import org.genesiscode.practicesix.view.row.RowEnunciateTwo;
 import org.genesiscode.practicesix.view.row.exerciseThree.RowInfoExerciseThree;
 
 import java.util.List;
@@ -16,10 +18,11 @@ public class ExerciseThreePane extends MyPane {
     private static ExerciseThreePane exerciseThreePane;
     private final ExerciseThree exerciseThree;
     private TableView<RowInfoExerciseThree> tableInfoStart;
+    private TableView<RowEnunciateTwo> tableEnunciateThree;
 
-    private Label lblSalesPerWeek, lblNumberOfWeek, lblTotalNumberOfWeek;
-    private TextField txtSalesPerWeek, txtNumberOfWeek;
-    private Button btnLoadData, btnClear;
+    private Label lblSalesPerWeek, lblNumberOfWeek, lblTotalNumberOfWeek, lblNumbers;
+    private TextField txtSalesPerWeek, txtNumberOfWeek, txtRandomNumbers;
+    private Button btnLoadData, btnClear, btnLoadNumbers;
 
     private ExerciseThreePane() {
         super("EJERCICIO 3");
@@ -49,6 +52,24 @@ public class ExerciseThreePane extends MyPane {
         tableInfoStart = new TableView<>();
         buildTableInfoStart();
 
+        // table of random numbers
+        tableEnunciateThree = new TableView<>();
+        buildTableEnunciateThree();
+
+        lblNumbers = new Label("Introducir números");
+        txtRandomNumbers = new TextField();
+        txtRandomNumbers.setPrefColumnCount(20);
+        btnLoadNumbers = new Button("Cargar Números");
+        btnLoadNumbers.setOnAction(actionEvent -> click_on_load_numbers());
+    }
+
+    private void click_on_load_numbers() {
+        try {
+            List<Double> data = Util.convertToList(txtRandomNumbers.getText());
+            tableEnunciateThree.setItems(exerciseThree.buildTableEnunciateThree(data));
+        } catch (NumberFormatException e) {
+            MessageBox.show("Introducir numeros", "Entrada no valida");
+        }
     }
 
     private void click_btn_clear() {
@@ -76,15 +97,29 @@ public class ExerciseThreePane extends MyPane {
 
     }
 
+    private void buildTableEnunciateThree() {
+        TableColumn<RowEnunciateTwo, Integer> colNumberRow =
+                column("Fila", "information", 100);
+        TableColumn<RowEnunciateTwo, Double> colProbability =
+                column("Numeros\nAleatorios", "probability", 100);
+
+        tableEnunciateThree.getColumns().addAll(List.of(colNumberRow, colProbability));
+    }
+
     private void buildPane() {
         VBox inputDataPane = new VBox(10, new HBox(10, lblSalesPerWeek, txtSalesPerWeek),
                 new HBox(10, lblNumberOfWeek, txtNumberOfWeek),
                 new HBox(10, btnLoadData, btnClear),
                 tableInfoStart, lblTotalNumberOfWeek);
         inputDataPane.setFillWidth(false);
-        //inputDataPane.setAlignment(Pos.CENTER);
 
-        mainPane = new VBox(10, new VBox(title, inputDataPane));
+
+        VBox numbersRandomPane = new VBox(20,
+                new VBox(10, lblNumbers, txtRandomNumbers, btnLoadNumbers),
+                tableEnunciateThree);
+        numbersRandomPane.setFillWidth(false);
+
+        mainPane = new VBox(10, new VBox(title, new HBox(20, inputDataPane, numbersRandomPane)));
         mainPane.setAlignment(Pos.CENTER);
         mainPane.setPadding(new Insets(20));
     }
