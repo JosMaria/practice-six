@@ -2,15 +2,18 @@ package org.genesiscode.practicesix.service;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.genesiscode.practicesix.service.utils.Decimal;
 import org.genesiscode.practicesix.view.row.RowEnunciateTwo;
 import org.genesiscode.practicesix.view.row.exerciseThree.RowInfoExerciseThree;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ExerciseThree {
 
     private final ObservableList<RowInfoExerciseThree> listToTableInfoStart;
     private List<Double> randomNumbers;
+    private int total;
 
     public ExerciseThree() {
         listToTableInfoStart = FXCollections.observableArrayList();
@@ -49,6 +52,18 @@ public class ExerciseThree {
         for (int number : list) {
             counter += number;
         }
+        total = counter;
         return counter;
+    }
+
+    public void addProbabilityToTableInfoStart() {
+        Consumer<RowInfoExerciseThree> consumer = row -> {
+            double numberOfWeek = (double) row.getNumberOfWeek() / total;
+            double probability = Decimal.getDecimal(2, numberOfWeek);
+            row.setProbability(probability);
+            row.setTxtProbability(String.format("%s/%s=%s", numberOfWeek, total, probability));
+
+        };
+        listToTableInfoStart.forEach(consumer);
     }
 }

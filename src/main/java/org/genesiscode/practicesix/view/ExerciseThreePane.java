@@ -22,7 +22,7 @@ public class ExerciseThreePane extends MyPane {
 
     private Label lblSalesPerWeek, lblNumberOfWeek, lblTotalNumberOfWeek, lblNumbers;
     private TextField txtSalesPerWeek, txtNumberOfWeek, txtRandomNumbers;
-    private Button btnLoadData, btnClear, btnLoadNumbers;
+    private Button btnLoadData, btnClear, btnLoadNumbers, btnStart;
 
     private ExerciseThreePane() {
         super("EJERCICIO 3");
@@ -50,6 +50,7 @@ public class ExerciseThreePane extends MyPane {
         lblTotalNumberOfWeek = new Label("Total: ");
         // table
         tableInfoStart = new TableView<>();
+        tableInfoStart.setEditable(true);
         buildTableInfoStart();
 
         // table of random numbers
@@ -61,6 +62,14 @@ public class ExerciseThreePane extends MyPane {
         txtRandomNumbers.setPrefColumnCount(20);
         btnLoadNumbers = new Button("Cargar Números");
         btnLoadNumbers.setOnAction(actionEvent -> click_on_load_numbers());
+
+        btnStart = new Button("Empezar");
+        btnStart.setOnAction(actionEvent -> click_btn_start());
+    }
+
+    private void click_btn_start() {
+        exerciseThree.addProbabilityToTableInfoStart();
+        System.out.println("click on btn start");
     }
 
     private void click_on_load_numbers() {
@@ -116,7 +125,7 @@ public class ExerciseThreePane extends MyPane {
 
         VBox numbersRandomPane = new VBox(20,
                 new VBox(10, lblNumbers, txtRandomNumbers, btnLoadNumbers),
-                tableEnunciateThree);
+                tableEnunciateThree, btnStart);
         numbersRandomPane.setFillWidth(false);
 
         mainPane = new VBox(10, new VBox(title, new HBox(20, inputDataPane, numbersRandomPane)));
