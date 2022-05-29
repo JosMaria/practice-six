@@ -1,6 +1,5 @@
 package org.genesiscode.practicesix.view;
 
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -20,7 +19,7 @@ public class ExerciseOnePane extends MyPane {
 
     private TableView<RowResult> tableResult;
     private TableView<RowInformation> tableInformation;
-    private Button btnStart, btnShow, btnLoadData;
+    private Button btnStart, btnShow, btnLoadData, btnClear;
     private TextField txtNumbers;
     private Label lblNumbers;
 
@@ -53,6 +52,13 @@ public class ExerciseOnePane extends MyPane {
         txtNumbers = new TextField();
         txtNumbers.setPrefColumnCount(20);
 
+        btnClear = new Button("Limpiar");
+        btnClear.setOnAction(actionEvent -> click_btn_clear());
+    }
+
+    private void click_btn_clear() {
+        txtNumbers.setText("");
+        tableResult.setItems(null);
     }
 
     private void click_on_loadData() {
@@ -68,11 +74,11 @@ public class ExerciseOnePane extends MyPane {
         VBox resultPane = new VBox(20, tableResult, new HBox(20, btnStart, btnShow));
         resultPane.setAlignment(Pos.CENTER);
 
-        VBox inputPane = new VBox(10, lblNumbers, txtNumbers, btnLoadData);
+        VBox inputPane = new VBox(10, lblNumbers, txtNumbers, new HBox(20, btnLoadData, btnClear));
         HBox tablePane = new HBox(10, resultPane, new VBox(40, inputPane, tableInformation));
         tablePane.setAlignment(Pos.CENTER);
+
         mainPane = new VBox(10, title, tablePane);
-        mainPane.setPadding(new Insets(10));
         mainPane.setAlignment(Pos.CENTER);
     }
 
@@ -105,6 +111,6 @@ public class ExerciseOnePane extends MyPane {
 
         tableInformation.getColumns().addAll(List.of(colOne, colTwo, colThree, colFour));
         tableInformation.setMaxWidth(490);
-        tableInformation.setMaxHeight(150);
+        tableInformation.setMaxHeight(110);
     }
 }
