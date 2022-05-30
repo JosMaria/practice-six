@@ -1,14 +1,13 @@
 package org.genesiscode.practicesix.view;
 
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.genesiscode.practicesix.service.ExerciseTwo;
+import org.genesiscode.practicesix.service.utils.Util;
 import org.genesiscode.practicesix.view.row.RowEnunciateTwo;
 import org.genesiscode.practicesix.view.row.RowInfoExerciseTwo;
 import org.genesiscode.practicesix.view.row.RowResult;
@@ -25,7 +24,9 @@ public class ExerciseTwoPane extends MyPane {
     private TableView<RowEnunciateTwo> dataTableOne, dataTableTwo, dataTableThree;
     private TableView<RowInfoExerciseTwo> infoTableOne, infoTableTwo, infoTableThree;
     private TableView<RowResultToExerciseTwo> tableFinal;
-    private Button btnStart;
+    private Button btnStart, btnLoadData, btnClear;
+    private TextField txtNumbers;
+    private Label lblNumbers;
 
     private ExerciseTwoPane() {
         super("EJERCICIO 2");
@@ -45,13 +46,22 @@ public class ExerciseTwoPane extends MyPane {
         btnStart = new Button("Empezar");
         btnStart.setOnAction(actionEvent -> click_btn_start());
 
+        lblNumbers = new Label("Introducir números");
+        txtNumbers = new TextField();
+        txtNumbers.setPrefColumnCount(20);
+        btnClear = new Button("Limpiar");
+        btnClear.setOnAction(actionEvent -> click_btn_clear());
+
+        btnLoadData = new Button("Cargar Datos");
+        btnLoadData.setOnAction(actionEvent -> click_btn_loadData());
+
         dataTableOne = buildTableToData("Pintas\nSemana");
         dataTableOne.setItems(exerciseTwo.getDataTableOne());
 
         dataTableTwo = buildTableToData("Pacientes\nSemana");
         dataTableTwo.setItems(exerciseTwo.getDataTableTwo());
 
-        dataTableThree = buildTableToData("Pintas");
+        dataTableThree = buildTableToData(" Pintas ");
         dataTableThree.setItems(exerciseTwo.getDataTableThree());
 
         infoTableOne = buildTableToInformation("Pintas");
@@ -63,31 +73,42 @@ public class ExerciseTwoPane extends MyPane {
         infoTableThree.setItems(exerciseTwo.getInfoTable(exerciseTwo.getDataToTableThree()));
     }
 
+    private void click_btn_clear() {
+        txtNumbers.setText("");
+        tableResult.setItems(null);
+    }
+
+    private void click_btn_loadData() {
+        List<Double> randomNumbers = Util.convertToList(txtNumbers.getText());
+        tableResult.setItems(exerciseTwo.buildRowsToStart(randomNumbers));
+
+    }
+
     private void click_btn_start() {
         tableFinal.setItems(exerciseTwo.buildRowToResult());
-        ExerciseTwoPaneAssistant.show(tableFinal);
+        ExerciseTwoPaneAssistant.show(tableFinal, infoTableOne, infoTableTwo, infoTableThree);
     }
 
     private void buildPane() {
-        HBox firstTablesPane = new HBox(20, new VBox(10, new Label("Cantidades Suministradas"), dataTableOne),
-                new VBox(10, new Label("Cantidad Suministradas / Entrega"), infoTableOne));
+        HBox informationTablesPane = new HBox(10,
+                new VBox(10, new Label("Cantidades Suministradas"), dataTableOne),
+                new VBox(10, new Label("Distribución de pacientes"), dataTableTwo),
+                new VBox(10, new Label("Demanda por pacientes"), dataTableThree)
+        );
 
-        HBox secondTablesPane = new HBox(20, new VBox(10, new Label("Distribución de pacientes"), dataTableTwo),
-                new VBox(10, new Label("Distribución de pacientes / Número de pacientes"), infoTableTwo));
+        VBox inputPane = new VBox(10, lblNumbers, txtNumbers, new HBox(20, btnLoadData, btnClear));
 
-        HBox thirdTablesPane = new HBox(20, new VBox(10, new Label("Demanda por pacientes"), dataTableThree),
-                new VBox(10, new Label("Demanda por pacientes"), infoTableThree));
+        VBox tableStartPane = new VBox(10, tableResult, btnStart);
+        tableStartPane.setAlignment(Pos.CENTER);
 
-        VBox informationTablesPane = new VBox(10, firstTablesPane, secondTablesPane, thirdTablesPane);
-        mainPane = new VBox(10, title, new HBox(10, new VBox(tableResult, btnStart), informationTablesPane));
-        mainPane.setPadding(new Insets(10));
+        mainPane = new VBox(10, title, new HBox(10, tableStartPane, new VBox(10, inputPane, informationTablesPane)));
+        mainPane.setAlignment(Pos.CENTER);
     }
 
     public void buildTableResult() {
         tableResult.getColumns().addAll(List.of(getColOne(), getColTwo()));
         tableResult.setMaxWidth(200);
         tableResult.setMaxHeight(320);
-        tableResult.setItems(exerciseTwo.buildRowsToStart());
     }
 
     private TableView<RowEnunciateTwo> buildTableToData(String titleColumnOne) {
