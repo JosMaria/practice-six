@@ -103,6 +103,7 @@ public class ExerciseTwoPane extends MyPane {
 
         mainPane = new VBox(10, title, new HBox(10, tableStartPane, new VBox(10, inputPane, informationTablesPane)));
         mainPane.setAlignment(Pos.CENTER);
+        mainPane.setPadding(new Insets(10));
     }
 
     public void buildTableResult() {
@@ -123,7 +124,7 @@ public class ExerciseTwoPane extends MyPane {
         TableView<RowEnunciateTwo> table = new TableView<>();
         table.getColumns().addAll(List.of(colOne, colTwo));
         table.setMaxWidth(200);
-        table.setMaxHeight(170);
+        table.setMaxHeight(185);
 
         return table;
     }

@@ -4,6 +4,7 @@ public class RowEnunciateTwo {
 
     private final int information;
     private final double probability;
+    private int sales;
 
     public RowEnunciateTwo(int information, double probability) {
         this.information = information;
@@ -16,5 +17,13 @@ public class RowEnunciateTwo {
 
     public double getProbability() {
         return probability;
+    }
+
+    public int getSales() {
+        return sales;
+    }
+
+    public void setSales(int sales) {
+        this.sales = sales;
     }
 }

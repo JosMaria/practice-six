@@ -39,8 +39,6 @@ public class ExerciseOnePane extends MyPane {
         btnStart.setOnAction(actionEvent -> click_on_start());
         btnShow = new Button("Mostrar Mensaje");
         btnShow.setOnAction(actionEvent -> MessageBox.show(exerciseOne.buildMessage(), "CONCLUSIÓN"));
-        btnLoadData = new Button("Cargar Datos");
-        btnLoadData.setOnAction(actionEvent -> click_on_loadData());
 
         tableResult = new TableView<>();
         tableInformation = new TableView<>();
@@ -51,6 +49,8 @@ public class ExerciseOnePane extends MyPane {
         lblNumbers = new Label("Introducir números");
         txtNumbers = new TextField();
         txtNumbers.setPrefColumnCount(20);
+        btnLoadData = new Button("Cargar Datos");
+        btnLoadData.setOnAction(actionEvent -> click_on_loadData());
 
         btnClear = new Button("Limpiar");
         btnClear.setOnAction(actionEvent -> click_btn_clear());
