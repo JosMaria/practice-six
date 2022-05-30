@@ -17,7 +17,10 @@ public class MenuBarPane implements EventHandler<ActionEvent> {
     private static final String EXERCISE_THREE = "Ejercicio 3";
 
     public MenuBarPane() {
-        this.mainPane = new VBox(10, getMenuBar(), new VBox());
+        mainPane = new VBox(10, getMenuBar(), new VBox());
+        mainPane.setMinWidth(800);
+        mainPane.setMinHeight(500);
+        /*mainPane.setMaxHeight(500);*/
     }
 
     public VBox getMainPane() {

@@ -14,8 +14,8 @@ import org.genesiscode.practicesix.view.row.RowResultToExerciseTwo;
 
 public class ExerciseTwoPaneAssistant {
 
-    public static void show(TableView<RowInfoExerciseTwo> tableOne, TableView<RowInfoExerciseTwo> tableTwo,
-                            TableView<RowInfoExerciseTwo> tableThree, TableView<RowResultToExerciseTwo> table) {
+    public static void show(TableView<RowResultToExerciseTwo> table, TableView<RowInfoExerciseTwo> tableOne,
+                            TableView<RowInfoExerciseTwo> tableTwo, TableView<RowInfoExerciseTwo> tableThree) {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Tabla de resultados");

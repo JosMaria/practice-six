@@ -21,16 +21,13 @@ public class ExerciseTwo {
         load();
     }
 
-    public ObservableList<RowResult> buildRowsToStart(List<Double> randomNumbers) throws IllegalArgumentException{
-        this.randomNumbers = randomNumbers;
-        if (randomNumbers.isEmpty()) {
-            throw new IllegalArgumentException("Introducir numeros");
-        }
+    public ObservableList<RowResult> buildRowsToStart(List<Double> randomNumbers) {
         ObservableList<RowResult> rowsToResult = FXCollections.observableArrayList();
         int counter = 0;
         for (double randomNumber : randomNumbers) {
             rowsToResult.add(new RowResult(++counter, randomNumber));
         }
+        this.randomNumbers = randomNumbers;
         return rowsToResult;
     }
 
