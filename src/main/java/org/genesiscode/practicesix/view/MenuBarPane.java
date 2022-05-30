@@ -2,12 +2,15 @@ package org.genesiscode.practicesix.view;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 public class MenuBarPane implements EventHandler<ActionEvent> {
 
@@ -17,7 +20,12 @@ public class MenuBarPane implements EventHandler<ActionEvent> {
     private static final String EXERCISE_THREE = "Ejercicio 3";
 
     public MenuBarPane() {
-        mainPane = new VBox(10, getMenuBar(), new VBox());
+        Label title = new Label("Practica 6");
+        title.setFont(new Font("Gargi", 30));
+        VBox paneDefault = new VBox(title);
+        paneDefault.setAlignment(Pos.CENTER);
+        paneDefault.setPadding(new Insets(20));
+        mainPane = new VBox(10, getMenuBar(), paneDefault);
         mainPane.setMinWidth(800);
         mainPane.setMinHeight(500);
         /*mainPane.setMaxHeight(500);*/

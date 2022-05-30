@@ -77,10 +77,10 @@ public class ExerciseThreePane extends MyPane {
     private void click_btn_start() {
         exerciseThree.addProbabilityToTableInfoStart();
         tableResultThree.setItems(exerciseThree.buildTableResult());
-        ExerciseThreePaneAssistant.show(tableResultThree);
         ObservableList<RowEnunciateTwo> items = tableEnunciateThree.getItems();
         exerciseThree.addSalesTableEnunciateThree(items, tableResultThree.getItems());
         lblResultTotal.setText("TOTAL " + exerciseThree.getResultTotal());
+        ExerciseThreePaneAssistant.show(tableResultThree);
     }
 
     private void click_on_load_numbers() {
@@ -156,7 +156,13 @@ public class ExerciseThreePane extends MyPane {
                 tableEnunciateThree, new HBox(50, btnStart, lblResultTotal));
         numbersRandomPane.setFillWidth(false);
 
-        mainPane = new VBox(10, new VBox(title, new HBox(20, inputDataPane, numbersRandomPane)));
+        HBox paneTemp = new HBox(20, inputDataPane, numbersRandomPane);
+        paneTemp.setAlignment(Pos.CENTER);
+
+        VBox pane = new VBox(10, title, paneTemp);
+        pane.setAlignment(Pos.CENTER);
+
+        mainPane = new VBox(10, pane);
         mainPane.setAlignment(Pos.CENTER);
         mainPane.setPadding(new Insets(20));
     }

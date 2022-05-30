@@ -16,13 +16,14 @@ public class ExerciseThreePaneAssistant {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Tabla de resultados");
-
+        table.setMaxHeight(250);
         VBox pane = new VBox(10, new Label("VENTA DE CALENTADORES"), table);
         pane.setPadding(new Insets(20));
         pane.setAlignment(Pos.CENTER);
+        pane.setFillWidth(false);
 
         Scene scene = new Scene(pane);
         stage.setScene(scene);
-        stage.showAndWait();
+        stage.show();
     }
 }
