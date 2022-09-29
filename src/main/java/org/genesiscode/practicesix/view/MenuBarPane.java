@@ -18,6 +18,7 @@ public class MenuBarPane implements EventHandler<ActionEvent> {
     private static final String EXERCISE_ONE = "Ejercicio 1";
     private static final String EXERCISE_TWO = "Ejercicio 2";
     private static final String EXERCISE_THREE = "Ejercicio 3";
+    private static final String EXERCISE_FOUR = "Ejercicio 4";
 
     public MenuBarPane() {
         Label title = new Label("Practica 6");
@@ -35,22 +36,16 @@ public class MenuBarPane implements EventHandler<ActionEvent> {
     }
 
     private MenuBar getMenuBar() {
-        Menu menuExerciseOne = new Menu(EXERCISE_ONE);
-        MenuItem menuItemOne = new MenuItem(EXERCISE_ONE);
-        menuExerciseOne.getItems().add(menuItemOne);
-        menuItemOne.setOnAction(this);
+        return new MenuBar(createMenu(EXERCISE_ONE), createMenu(EXERCISE_TWO),
+                            createMenu(EXERCISE_THREE), createMenu(EXERCISE_FOUR));
+    }
 
-        Menu menuExerciseTwo = new Menu(EXERCISE_TWO);
-        MenuItem menuItemTwo = new MenuItem(EXERCISE_TWO);
-        menuExerciseTwo.getItems().add(menuItemTwo);
-        menuItemTwo.setOnAction(this);
-
-        Menu menuExerciseThree = new Menu(EXERCISE_THREE);
-        MenuItem menuItemThree = new MenuItem(EXERCISE_THREE);
-        menuExerciseThree.getItems().add(menuItemThree);
-        menuItemThree.setOnAction(this);
-
-        return new MenuBar(menuExerciseOne, menuExerciseTwo, menuExerciseThree);
+    private Menu createMenu(String title) {
+        Menu menu = new Menu(title);
+        MenuItem menuItem = new MenuItem(title);
+        menu.getItems().add(menuItem);
+        menuItem.setOnAction(this);
+        return menu;
     }
 
     @Override
@@ -58,9 +53,10 @@ public class MenuBarPane implements EventHandler<ActionEvent> {
         MenuItem source = (MenuItem) actionEvent.getSource();
 
         VBox pane = switch (source.getText()) {
-            case EXERCISE_ONE -> ExerciseOnePane.getInstance().mainPane;
-            case EXERCISE_TWO -> ExerciseTwoPane.getInstance().mainPane;
+            case EXERCISE_ONE -> ExerciseTwoPane.getInstance().mainPane;
+            case EXERCISE_TWO -> new VBox(new Label("in progress...."));
             case EXERCISE_THREE -> ExerciseThreePane.getInstance().mainPane;
+            case EXERCISE_FOUR -> new VBox(new Label("In progress..."));
             default -> new VBox(new Label("Empty"));
         };
 
