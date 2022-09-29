@@ -28,7 +28,7 @@ public class ExerciseThreePane extends MyPane {
     private Button btnLoadData, btnClear, btnLoadNumbers, btnStart;
 
     private ExerciseThreePane() {
-        super("EJERCICIO 3");
+        super("EJERCICIO 2");
         exerciseThree = new ExerciseThree();
         loadControls();
         buildPane();
@@ -54,10 +54,17 @@ public class ExerciseThreePane extends MyPane {
         // table
         tableInfoStart = new TableView<>();
         tableInfoStart.setEditable(true);
+        // 60 to first row, "increment 30 for each row"
+        tableInfoStart.setPrefHeight(210);
+
+        /*tableInfoStart.setMaxHeight(250);
+        tableInfoStart.setPrefWidth(310);*/
         buildTableInfoStart();
 
         // table of random numbers
         tableEnunciateThree = new TableView<>();
+        tableEnunciateThree.setPrefHeight(210);
+        tableEnunciateThree.setPrefWidth(290);
         buildTableEnunciateThree();
 
         lblNumbers = new Label("Introducir números");
@@ -80,7 +87,7 @@ public class ExerciseThreePane extends MyPane {
         ObservableList<RowEnunciateTwo> items = tableEnunciateThree.getItems();
         exerciseThree.addSalesTableEnunciateThree(items, tableResultThree.getItems());
         lblResultTotal.setText("TOTAL " + exerciseThree.getResultTotal());
-        ExerciseThreePaneAssistant.show(tableResultThree);
+        ExerciseThreePaneAssistant.show(tableResultThree, tableEnunciateThree, lblResultTotal);
     }
 
     private void click_on_load_numbers() {
@@ -100,8 +107,8 @@ public class ExerciseThreePane extends MyPane {
         int salesPerWeek = Integer.parseInt(txtSalesPerWeek.getText());
         int numberOfWeek = Integer.parseInt(txtNumberOfWeek.getText());
         exerciseThree.addItemToListToTableInfoStart(salesPerWeek, numberOfWeek);
-        txtSalesPerWeek.setText("");
-        txtNumberOfWeek.setText("");
+        txtSalesPerWeek.clear();
+        txtNumberOfWeek.clear();
         lblTotalNumberOfWeek.setText(lblTotalNumberOfWeek.getText().substring(0, 7) + exerciseThree.totalNumberOfWeeks());
     }
 
@@ -144,20 +151,21 @@ public class ExerciseThreePane extends MyPane {
     }
 
     private void buildPane() {
-        VBox inputDataPane = new VBox(10, new HBox(10, lblSalesPerWeek, txtSalesPerWeek),
-                new HBox(10, lblNumberOfWeek, txtNumberOfWeek),
-                new HBox(10, btnLoadData, btnClear),
-                tableInfoStart, lblTotalNumberOfWeek);
-        inputDataPane.setFillWidth(false);
-
-
-        VBox numbersRandomPane = new VBox(20,
-                new VBox(10, lblNumbers, txtRandomNumbers, btnLoadNumbers),
-                tableEnunciateThree, new HBox(50, btnStart, lblResultTotal));
+        /*tableEnunciateThree, new HBox(50, btnStart, lblResultTotal));*/
+        VBox numbersRandomPane = new VBox(20, new VBox(10, lblNumbers, txtRandomNumbers, new HBox(20, btnLoadNumbers, btnStart)));
         numbersRandomPane.setFillWidth(false);
 
-        HBox paneTemp = new HBox(20, inputDataPane, numbersRandomPane);
+        HBox inputDataPane = new HBox(100,
+            new VBox(10,
+                    new HBox(10, lblSalesPerWeek, txtSalesPerWeek),
+                    new HBox(10, lblNumberOfWeek, txtNumberOfWeek),
+                    new HBox(10, btnLoadData, btnClear)),
+            numbersRandomPane);
+        inputDataPane.setAlignment(Pos.CENTER);
+
+        VBox paneTemp = new VBox(10, inputDataPane, tableInfoStart, lblTotalNumberOfWeek);
         paneTemp.setAlignment(Pos.CENTER);
+        paneTemp.setFillWidth(false);
 
         VBox pane = new VBox(10, title, paneTemp);
         pane.setAlignment(Pos.CENTER);

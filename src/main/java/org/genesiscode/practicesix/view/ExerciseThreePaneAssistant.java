@@ -5,19 +5,31 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.genesiscode.practicesix.view.row.RowEnunciateTwo;
 import org.genesiscode.practicesix.view.row.exerciseThree.RowResultExerciseThree;
 
 public class ExerciseThreePaneAssistant {
 
-    public static void show(TableView<RowResultExerciseThree> table) {
+    public static void show(TableView<RowResultExerciseThree> table, TableView<RowEnunciateTwo> tableIncise, Label lblResultTotal) {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Tabla de resultados");
-        table.setMaxHeight(250);
-        VBox pane = new VBox(10, new Label("VENTA DE CALENTADORES"), table);
+        table.setMaxHeight(210);
+
+        VBox inciseResultPane = new VBox(10, tableIncise, lblResultTotal);
+        inciseResultPane.setAlignment(Pos.CENTER_RIGHT);
+
+        VBox resultsPane = new VBox(10,
+                new Label(String.format("Faltantes %s veces durante las %s semanas (semana: %s)", 3, 20, "7 14 16")),
+                new Label(String.format("Venta promedio  %s calentadores/semana", 6.75)),
+                new Label(String.format("E(ventas)  %s calentadores/semana", 6.88)));
+
+        VBox pane = new VBox(10, new Label("VENTA DE CALENTADORES"), new HBox(10, table, inciseResultPane), resultsPane);
+
         pane.setPadding(new Insets(20));
         pane.setAlignment(Pos.CENTER);
         pane.setFillWidth(false);

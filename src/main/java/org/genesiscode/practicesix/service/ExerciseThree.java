@@ -99,8 +99,7 @@ public class ExerciseThree {
             double numberOfWeek = (double) row.getNumberOfWeek() / total;
             double probability = Decimal.getDecimal(2, numberOfWeek);
             row.setProbability(probability);
-            row.setTxtProbability(String.format("%s/%s=%s", numberOfWeek, total, probability));
-
+            row.setTxtProbability(String.valueOf(probability));
         };
         listToTableInfoStart.forEach(consumer);
     }
