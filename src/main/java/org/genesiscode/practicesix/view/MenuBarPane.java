@@ -26,9 +26,8 @@ public class MenuBarPane implements EventHandler<ActionEvent> {
         paneDefault.setAlignment(Pos.CENTER);
         paneDefault.setPadding(new Insets(20));
         mainPane = new VBox(10, getMenuBar(), paneDefault);
-        mainPane.setMinWidth(800);
+        mainPane.setMinWidth(850);
         mainPane.setMinHeight(500);
-        /*mainPane.setMaxHeight(500);*/
     }
 
     public VBox getMainPane() {

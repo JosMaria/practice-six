@@ -25,7 +25,7 @@ public class ExerciseTwoPane extends MyPane {
     private TableView<RowInfoExerciseTwo> infoTableOne, infoTableTwo, infoTableThree;
     private TableView<RowResultToExerciseTwo> tableFinal;
     private Button btnStart, btnLoadData, btnClear;
-    private TextField txtNumbers;
+    private TextArea txtAreaNumbers;
     private Label lblNumbers;
 
     private ExerciseTwoPane() {
@@ -47,10 +47,13 @@ public class ExerciseTwoPane extends MyPane {
         btnStart.setOnAction(actionEvent -> click_btn_start());
 
         lblNumbers = new Label("Introducir números");
-        txtNumbers = new TextField();
-        txtNumbers.setPrefColumnCount(20);
         btnClear = new Button("Limpiar");
         btnClear.setOnAction(actionEvent -> click_btn_clear());
+
+        txtAreaNumbers = new TextArea();
+        txtAreaNumbers.setWrapText(true);
+        txtAreaNumbers.setMaxHeight(45);
+        txtAreaNumbers.setMaxWidth(450);
 
         btnLoadData = new Button("Cargar Datos");
         btnLoadData.setOnAction(actionEvent -> click_btn_loadData());
@@ -74,14 +77,13 @@ public class ExerciseTwoPane extends MyPane {
     }
 
     private void click_btn_clear() {
-        txtNumbers.setText("");
+        txtAreaNumbers.clear();
         tableResult.setItems(null);
     }
 
     private void click_btn_loadData() {
-        List<Double> randomNumbers = Util.convertToList(txtNumbers.getText());
+        List<Double> randomNumbers = Util.convertToList(txtAreaNumbers.getText());
         tableResult.setItems(exerciseTwo.buildRowsToStart(randomNumbers));
-
     }
 
     private void click_btn_start() {
@@ -96,12 +98,11 @@ public class ExerciseTwoPane extends MyPane {
                 new VBox(10, new Label("Demanda por pacientes"), dataTableThree)
         );
 
-        VBox inputPane = new VBox(10, lblNumbers, txtNumbers, new HBox(20, btnLoadData, btnClear));
-
+        VBox inputPane = new VBox(10, lblNumbers, txtAreaNumbers, new HBox(20, btnLoadData, btnClear));
         VBox tableStartPane = new VBox(10, tableResult, btnStart);
         tableStartPane.setAlignment(Pos.CENTER);
 
-        mainPane = new VBox(10, title, new HBox(10, tableStartPane, new VBox(10, inputPane, informationTablesPane)));
+        mainPane = new VBox(10, title, new HBox(10, tableStartPane, new VBox(20, inputPane, informationTablesPane)));
         mainPane.setAlignment(Pos.CENTER);
         mainPane.setPadding(new Insets(10));
     }
@@ -138,7 +139,7 @@ public class ExerciseTwoPane extends MyPane {
         TableView<RowInfoExerciseTwo> table = new TableView<>();
         table.getColumns().addAll(List.of(columnOne, columnTwo, columnThree, columnFour));
         table.setMinWidth(380);
-        table.setMaxHeight(170);
+        table.setMaxHeight(180);
         return table;
     }
 
@@ -185,8 +186,9 @@ public class ExerciseTwoPane extends MyPane {
         tableFinal = new TableView<>();
         tableFinal.getColumns().addAll(List.of(columnOne, columnTwo, columnThree, columnFour,
                 columnFive, columnSix, columnSeven, columnEight, columnNine, columnTen, columnEleven));
-        tableFinal.setMinWidth(990);
-        tableFinal.setMaxHeight(250);
+        tableFinal.setMinWidth(1050);
+        tableFinal.setMaxWidth(1050);
+        tableFinal.setMaxHeight(210);
     }
 
     private <U, T> TableColumn<U, T> column(String titleColumn, String property, double prefSize) {

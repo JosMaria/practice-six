@@ -17,10 +17,6 @@ public class MyPane {
         title.setFont(new Font("Gargi", 20));
     }
 
-    protected VBox getMainPane() {
-        return mainPane;
-    }
-
     protected TableColumn<RowResult, Integer> getColOne() {
         TableColumn<RowResult, Integer> colOne = new TableColumn<>("Número");
         colOne.setCellValueFactory(new PropertyValueFactory<>("numberBall"));
