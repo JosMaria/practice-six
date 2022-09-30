@@ -54,7 +54,7 @@ public class MenuBarPane implements EventHandler<ActionEvent> {
         VBox pane = switch (source.getText()) {
             case EXERCISE_ONE -> ExerciseOnePane.getInstance().mainPane;
             case EXERCISE_TWO -> ExerciseTwoPane.getInstance().mainPane;
-            case EXERCISE_THREE -> new VBox(new Label("in progress...."));
+            case EXERCISE_THREE -> ExerciseThreePane.getInstance().mainPane;
             case EXERCISE_FOUR -> new VBox(new Label("In progress..."));
             default -> new VBox(new Label("Empty"));
         };
