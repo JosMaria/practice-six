@@ -21,11 +21,18 @@ public class MenuBarPane implements EventHandler<ActionEvent> {
     private static final String EXERCISE_FOUR = "Ejercicio 4";
 
     public MenuBarPane() {
-        Label title = new Label("Practica 6");
+        Label title = new Label("Practica 7 - PROYECTO");
         title.setFont(new Font("Gargi", 30));
-        VBox paneDefault = new VBox(title);
+
+        VBox informationPane = new VBox(10,
+                new Label("ESTUDIANTE: Jose Maria Aguilar Chambi"),
+                new Label("DOCENTE: Jose Richard Ayoroa Cardozo"));
+        informationPane.setAlignment(Pos.CENTER);
+
+        VBox paneDefault = new VBox(30, title, informationPane);
         paneDefault.setAlignment(Pos.CENTER);
         paneDefault.setPadding(new Insets(20));
+
         mainPane = new VBox(10, getMenuBar(), paneDefault);
         mainPane.setMinWidth(850);
         mainPane.setMinHeight(500);
