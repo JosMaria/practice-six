@@ -4,8 +4,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import org.genesiscode.practicesix.view.row.exerciseFour.RowDataProcessed;
-import org.genesiscode.practicesix.view.row.exerciseFour.RowRandomNumbers;
+import org.genesiscode.practicesix.view.row.three.RowDataProcessed;
+import org.genesiscode.practicesix.view.row.three.RowRandomNumbers;
 
 import java.util.List;
 

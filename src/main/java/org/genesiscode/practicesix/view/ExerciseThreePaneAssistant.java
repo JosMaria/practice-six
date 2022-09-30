@@ -10,8 +10,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.genesiscode.practicesix.view.row.exerciseFour.RowDataProcessed;
-import org.genesiscode.practicesix.view.row.exerciseFour.RowResult;
+import org.genesiscode.practicesix.view.row.three.RowDataProcessed;
+import org.genesiscode.practicesix.view.row.three.RowResult;
 
 public class ExerciseThreePaneAssistant {
 

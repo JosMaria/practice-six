@@ -55,7 +55,7 @@ public class MenuBarPane implements EventHandler<ActionEvent> {
             case EXERCISE_ONE -> ExerciseOnePane.getInstance().mainPane;
             case EXERCISE_TWO -> ExerciseTwoPane.getInstance().mainPane;
             case EXERCISE_THREE -> ExerciseThreePane.getInstance().mainPane;
-            case EXERCISE_FOUR -> new VBox(new Label("In progress..."));
+            case EXERCISE_FOUR -> ExerciseFourPane.getInstance().mainPane;
             default -> new VBox(new Label("Empty"));
         };
         changePane(new VBox(pane));

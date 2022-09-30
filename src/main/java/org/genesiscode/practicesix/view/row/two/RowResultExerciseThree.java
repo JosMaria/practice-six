@@ -1,4 +1,4 @@
-package org.genesiscode.practicesix.view.row.exerciseThree;
+package org.genesiscode.practicesix.view.row.two;
 
 public class RowResultExerciseThree {
 

@@ -10,7 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.genesiscode.practicesix.view.row.RowEnunciateTwo;
-import org.genesiscode.practicesix.view.row.exerciseThree.RowResultExerciseThree;
+import org.genesiscode.practicesix.view.row.two.RowResultExerciseThree;
 
 public class ExerciseTwoPaneAssistant {
 

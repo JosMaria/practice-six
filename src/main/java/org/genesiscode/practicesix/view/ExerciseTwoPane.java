@@ -10,8 +10,8 @@ import javafx.scene.layout.VBox;
 import org.genesiscode.practicesix.service.ExerciseTwo;
 import org.genesiscode.practicesix.service.utils.Util;
 import org.genesiscode.practicesix.view.row.RowEnunciateTwo;
-import org.genesiscode.practicesix.view.row.exerciseThree.RowInfoExerciseThree;
-import org.genesiscode.practicesix.view.row.exerciseThree.RowResultExerciseThree;
+import org.genesiscode.practicesix.view.row.two.RowInfoExerciseThree;
+import org.genesiscode.practicesix.view.row.two.RowResultExerciseThree;
 
 import java.util.List;
 

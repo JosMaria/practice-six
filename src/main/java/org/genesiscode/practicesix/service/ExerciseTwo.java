@@ -4,8 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.genesiscode.practicesix.service.utils.Decimal;
 import org.genesiscode.practicesix.view.row.RowEnunciateTwo;
-import org.genesiscode.practicesix.view.row.exerciseThree.RowInfoExerciseThree;
-import org.genesiscode.practicesix.view.row.exerciseThree.RowResultExerciseThree;
+import org.genesiscode.practicesix.view.row.two.RowInfoExerciseThree;
+import org.genesiscode.practicesix.view.row.two.RowResultExerciseThree;
 
 import java.util.List;
 import java.util.function.Consumer;

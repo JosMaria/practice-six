@@ -3,9 +3,9 @@ package org.genesiscode.practicesix.service;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.genesiscode.practicesix.service.utils.Decimal;
-import org.genesiscode.practicesix.view.row.exerciseFour.RowDataProcessed;
-import org.genesiscode.practicesix.view.row.exerciseFour.RowRandomNumbers;
-import org.genesiscode.practicesix.view.row.exerciseFour.RowResult;
+import org.genesiscode.practicesix.view.row.three.RowDataProcessed;
+import org.genesiscode.practicesix.view.row.three.RowRandomNumbers;
+import org.genesiscode.practicesix.view.row.three.RowResult;
 
 import java.time.LocalTime;
 import java.util.List;

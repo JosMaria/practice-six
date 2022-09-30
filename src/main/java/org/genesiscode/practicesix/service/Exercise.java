@@ -2,7 +2,7 @@ package org.genesiscode.practicesix.service;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.genesiscode.practicesix.view.row.exerciseFour.RowRandomNumbers;
+import org.genesiscode.practicesix.view.row.three.RowRandomNumbers;
 
 import java.util.List;
 

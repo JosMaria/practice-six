@@ -10,9 +10,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.genesiscode.practicesix.service.ExerciseThree;
 import org.genesiscode.practicesix.service.utils.Util;
-import org.genesiscode.practicesix.view.row.exerciseFour.RowDataProcessed;
-import org.genesiscode.practicesix.view.row.exerciseFour.RowRandomNumbers;
-import org.genesiscode.practicesix.view.row.exerciseFour.RowResult;
+import org.genesiscode.practicesix.view.row.three.RowDataProcessed;
+import org.genesiscode.practicesix.view.row.three.RowRandomNumbers;
+import org.genesiscode.practicesix.view.row.three.RowResult;
 
 import java.util.List;
 
