@@ -9,30 +9,35 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.genesiscode.practicesix.view.row.RowInfoExerciseTwo;
-import org.genesiscode.practicesix.view.row.RowResultToExerciseTwo;
+import org.genesiscode.practicesix.view.row.RowEnunciateTwo;
+import org.genesiscode.practicesix.view.row.exerciseThree.RowResultExerciseThree;
 
 public class ExerciseTwoPaneAssistant {
 
-    public static void show(TableView<RowResultToExerciseTwo> table, TableView<RowInfoExerciseTwo> tableOne,
-                            TableView<RowInfoExerciseTwo> tableTwo, TableView<RowInfoExerciseTwo> tableThree) {
+    public static void show(TableView<RowResultExerciseThree> table, TableView<RowEnunciateTwo> tableIncise, Label lblResultTotal,
+                            int times, int weeks, String weeksSpecific, double averageTotal, double functionSales) {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Tabla de resultados");
-        stage.setMinWidth(1000);
-        stage.setMaxHeight(1000);
+        table.setMaxHeight(210);
 
-        HBox infoTablePane = new HBox(10,
-                new VBox(10, new Label("Cantidad Suministradas / Entrega"), tableOne),
-                new VBox(10, new Label("Distribución de pacientes / Número de pacientes"), tableTwo),
-                new VBox(10, new Label("Demanda por pacientes"), tableThree));
-        VBox assistPane = new VBox(20, infoTablePane, table);
-        assistPane.setPadding(new Insets(20));
-        assistPane.setAlignment(Pos.CENTER);
+        VBox inciseResultPane = new VBox(10, tableIncise, lblResultTotal);
+        inciseResultPane.setAlignment(Pos.CENTER_RIGHT);
 
-        VBox pane = new VBox(10, assistPane);
+        VBox resultsPane = new VBox(10,
+                new Label("\t===== RESULTADOS DE LOS INCISOS ====="),
+                new Label(String.format("Faltantes %s veces durante las %s semanas (semana: %s)", times, weeks, weeksSpecific)),
+                new Label(String.format("Venta promedio  %s calentadores/semana", averageTotal)),
+                new Label(String.format("E(ventas)  %s calentadores/semana", functionSales)));
+
+        VBox pane = new VBox(10, new Label("VENTA DE CALENTADORES"), new HBox(10, table, inciseResultPane), resultsPane);
+
+        pane.setPadding(new Insets(20));
+        pane.setAlignment(Pos.CENTER);
+        pane.setFillWidth(false);
+
         Scene scene = new Scene(pane);
         stage.setScene(scene);
-        stage.showAndWait();
+        stage.show();
     }
 }

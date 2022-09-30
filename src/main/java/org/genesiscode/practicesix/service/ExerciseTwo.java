@@ -4,184 +4,144 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.genesiscode.practicesix.service.utils.Decimal;
 import org.genesiscode.practicesix.view.row.RowEnunciateTwo;
-import org.genesiscode.practicesix.view.row.RowInfoExerciseTwo;
-import org.genesiscode.practicesix.view.row.RowResult;
-import org.genesiscode.practicesix.view.row.RowResultToExerciseTwo;
+import org.genesiscode.practicesix.view.row.exerciseThree.RowInfoExerciseThree;
+import org.genesiscode.practicesix.view.row.exerciseThree.RowResultExerciseThree;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class ExerciseTwo {
 
-    private List<Double> randomNumbers;
-    private ObservableList<RowEnunciateTwo> dataTableOne, dataTableTwo, dataTableThree;
-    private List<RowEnunciateTwo> dataToTableOne, dataToTableTwo, dataToTableThree;
+    private final ObservableList<RowInfoExerciseThree> listToTableInfoStart;
+    private int total, resultTotal;
+
+    private int times;
+    private int weeks;
+    private final StringBuilder weeksSpecific = new StringBuilder();
+    private double averageTotal;
+    private double functionSales;
+
+    public int getTimes() {
+        return times;
+    }
+
+    public int getWeeks() {
+        return weeks;
+    }
+
+    public String getWeeksSpecific() {
+        return weeksSpecific.toString().trim();
+    }
+
+    public double getAverageTotal() {
+        return averageTotal;
+    }
+
+    public double getFunctionSales() {
+        return Decimal.getDecimal(2, functionSales);
+    }
 
     public ExerciseTwo() {
-        load();
+        listToTableInfoStart = FXCollections.observableArrayList();
     }
 
-    public ObservableList<RowResult> buildRowsToStart(List<Double> randomNumbers) {
-        ObservableList<RowResult> rowsToResult = FXCollections.observableArrayList();
-        int counter = 0;
-        for (double randomNumber : randomNumbers) {
-            rowsToResult.add(new RowResult(++counter, randomNumber));
+    public int getResultTotal() {
+        return resultTotal;
+    }
+
+    public ObservableList<RowEnunciateTwo> buildTableEnunciateThree(List<Double> data) {
+        ObservableList<RowEnunciateTwo> rows = FXCollections.observableArrayList();
+        int counter = 1;
+        for (double randomNumber : data) {
+            rows.add(new RowEnunciateTwo(counter, randomNumber));
+            counter++;
         }
-        this.randomNumbers = randomNumbers;
-        return rowsToResult;
+        return rows;
     }
 
-    private void load() {
-        dataToTableOne = List.of(
-                new RowEnunciateTwo(4, 0.15),
-                new RowEnunciateTwo(5, 0.20),
-                new RowEnunciateTwo(6, 0.25),
-                new RowEnunciateTwo(7, 0.15),
-                new RowEnunciateTwo(8, 0.15),
-                new RowEnunciateTwo(9, 0.10));
-        dataTableOne = loadInformation(dataToTableOne);
-
-        dataToTableTwo = List.of(
-                new RowEnunciateTwo(0, 0.25),
-                new RowEnunciateTwo(1, 0.25),
-                new RowEnunciateTwo(2, 0.30),
-                new RowEnunciateTwo(3, 0.15),
-                new RowEnunciateTwo(4, 0.05));
-        dataTableTwo = loadInformation(dataToTableTwo);
-
-        dataToTableThree = List.of(
-                new RowEnunciateTwo(1, 0.40),
-                new RowEnunciateTwo(2, 0.30),
-                new RowEnunciateTwo(3, 0.20),
-                new RowEnunciateTwo(4, 0.10));
-        dataTableThree = loadInformation(dataToTableThree);
+    public void addItemToListToTableInfoStart(int salesPerWeek, int numberOfWeek) {
+        RowInfoExerciseThree row = new RowInfoExerciseThree(salesPerWeek, numberOfWeek);
+        listToTableInfoStart.add(row);
     }
 
-    private ObservableList<RowEnunciateTwo> loadInformation(List<RowEnunciateTwo> informationToTableOne) {
-        ObservableList<RowEnunciateTwo> observableList = FXCollections.observableArrayList();
-        observableList.addAll(informationToTableOne);
-        return observableList;
+    public void clearItemsOfListToTableInfoStart() {
+        listToTableInfoStart.clear();
     }
 
-    private ObservableList<RowInfoExerciseTwo> listInfoToTableOne;
-    private ObservableList<RowInfoExerciseTwo> listInfoToTableTwo;
-    private ObservableList<RowInfoExerciseTwo> listInfoToTableThree;
-
-    public void loadTables() {
-        listInfoToTableOne = getInfoTable(dataTableOne);
-        listInfoToTableTwo = getInfoTable(dataTableTwo);
-        listInfoToTableThree = getInfoTable(dataTableThree);
+    public ObservableList<RowInfoExerciseThree> getListToTableInfoStart() {
+        return listToTableInfoStart;
     }
 
-    public ObservableList<RowInfoExerciseTwo> getInfoTable(List<RowEnunciateTwo> list) {
-        ObservableList<RowInfoExerciseTwo> observableList = FXCollections.observableArrayList();
+    public ObservableList<RowResultExerciseThree> buildTableResult() {
+        ObservableList<RowResultExerciseThree> list = FXCollections.observableArrayList();
         double accumulated = 0.0;
+        functionSales = 0;
 
-        for (RowEnunciateTwo row : list) {
-            double colProbability = row.getProbability();
-            double startRange = Decimal.getDecimal(2, accumulated);
-            accumulated += colProbability;
+        for (RowInfoExerciseThree row : listToTableInfoStart) {
+            double probability = row.getProbability();
+            double rangeStart = accumulated;
+            accumulated += probability;
             accumulated = Decimal.getDecimal(2, accumulated);
-            double endRange = Decimal.getDecimal(2, accumulated);
-
-            RowInfoExerciseTwo rowToAdded = new RowInfoExerciseTwo(colProbability, accumulated,
-                    String.format("[%s - %s)", startRange, endRange), row.getInformation());
-            rowToAdded.setRangeStart(startRange);
-            rowToAdded.setRangeEnd(endRange);
-            observableList.add(rowToAdded);
-        }
-        return observableList;
-    }
-
-    public ObservableList<RowResultToExerciseTwo> buildRowToResult() {
-        ObservableList<RowResultToExerciseTwo> rowsToResultFinal = FXCollections.observableArrayList();
-        loadTables();
-        int week = 1, initialInventory = 0, indexToNumber = 0;
-        while (indexToNumber < randomNumbers.size()) {
-            double randomNumberOne = randomNumbers.get(indexToNumber);
-            int pintsOne = getValueInInterval(listInfoToTableOne, randomNumberOne);
-            int totalAvailableBlood = initialInventory + pintsOne;
-            indexToNumber++;
-            double randomNumberTwo = randomNumbers.get(indexToNumber);
-            int numberOfPatients = getValueInInterval(listInfoToTableTwo, randomNumberTwo);
-            List<Integer> patients = sequenceNumber(numberOfPatients);
-            indexToNumber++;
-            List<Double> randomNumbersThree = getRandomNumbersByPatient(patients.size(), indexToNumber);
-            indexToNumber = indexToNumber + patients.size();
-
-            List<Integer> pints = new ArrayList<>();
-            for (Double numberRandom : randomNumbersThree) {
-                pints.add(getValueInInterval(listInfoToTableThree, numberRandom));
-            }
-
-            List<Integer> numberOfPintsRemaining = getNumberOfPintsRemaining(totalAvailableBlood, pints);
-            RowResultToExerciseTwo row = new RowResultToExerciseTwo(week, initialInventory, randomNumberOne,
-                                    pintsOne, totalAvailableBlood, randomNumberTwo, numberOfPatients, patients,
-                                    randomNumbersThree, pints, numberOfPintsRemaining);
-            rowsToResultFinal.add(row);
-            initialInventory = numberOfPintsRemaining.get(numberOfPintsRemaining.size() - 1);
-            week++;
-
-        }
-        return rowsToResultFinal;
-    }
-
-    private List<Integer> getNumberOfPintsRemaining(int totalAvailableBlood, List<Integer> pints) {
-        ArrayList<Integer> pintsRemaining = new ArrayList<>();
-        if (pints.isEmpty()) {
-            pintsRemaining.add(totalAvailableBlood);
-        } else {
-            for (int pint : pints) {
-                totalAvailableBlood -= pint;
-                pintsRemaining.add(totalAvailableBlood);
-            }
-        }
-        return pintsRemaining;
-    }
-    private List<Double> getRandomNumbersByPatient(int count, int index) {
-        ArrayList<Double> list = new ArrayList<>();
-        for (int i = 0; i < count; i++, index++) {
-            list.add(randomNumbers.get(index));
-        }
-        return list;
-    }
-    private int getValueInInterval(ObservableList<RowInfoExerciseTwo> list, double randomNumber) {
-        return list.stream()
-                .filter(row -> row.getRangeStart() <= randomNumber && randomNumber < row.getRangeEnd())
-                .map(RowInfoExerciseTwo::getData)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("It does not exists in the interval"));
-    }
-
-    public List<Integer> sequenceNumber(int length) {
-        List<Integer> list = new ArrayList<>();
-        for (int number = 1; number <= length; number++) {
-            list.add(number);
+            double rangeEnd = accumulated;
+            String range = String.format("[%s - %s)", rangeStart, rangeEnd);
+            RowResultExerciseThree rowToAdded =
+                    new RowResultExerciseThree(probability, accumulated, range, row.getSalesPerWeek());
+            functionSales += probability * row.getSalesPerWeek();
+            rowToAdded.setStartRange(rangeStart);
+            rowToAdded.setEndRange(rangeEnd);
+            list.add(rowToAdded);
         }
         return list;
     }
 
-    public ObservableList<RowEnunciateTwo> getDataTableOne() {
-        return dataTableOne;
+    public void addSalesTableEnunciateThree(ObservableList<RowEnunciateTwo> items, ObservableList<RowResultExerciseThree> listRange) {
+        int total = 0;
+        int counter = 1;
+        times = 0;
+        if (!weeksSpecific.isEmpty()) {
+            weeksSpecific.delete(0, weeksSpecific.length()-1);
+        }
+        for (RowEnunciateTwo item : items) {
+            RowResultExerciseThree element = listRange.stream()
+                    .filter(row -> {
+                        double probability = item.getProbability();
+                        return row.getStartRange() <= probability && probability < row.getEndRange();
+                    })
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException("Not found"));
+            item.setSales(element.getSales());
+            if (element.getSales() >= 10) {
+                weeksSpecific.append(counter).append(" ");
+                times++;
+            }
+            total += element.getSales();
+            counter++;
+        }
+        resultTotal = total;
+        averageTotal =  Decimal.getDecimal(2, (double) resultTotal / items.size());
+        weeks = items.size();
     }
 
-    public ObservableList<RowEnunciateTwo> getDataTableTwo() {
-        return dataTableTwo;
+    public int totalNumberOfWeeks() {
+        List<Integer> list = listToTableInfoStart.stream()
+                .map(RowInfoExerciseThree::getNumberOfWeek)
+                .toList();
+
+        int counter = 0;
+        for (int number : list) {
+            counter += number;
+        }
+        total = counter;
+        return counter;
     }
 
-    public ObservableList<RowEnunciateTwo> getDataTableThree() {
-        return dataTableThree;
-    }
-
-    public List<RowEnunciateTwo> getDataToTableOne() {
-        return dataToTableOne;
-    }
-
-    public List<RowEnunciateTwo> getDataToTableTwo() {
-        return dataToTableTwo;
-    }
-
-    public List<RowEnunciateTwo> getDataToTableThree() {
-        return dataToTableThree;
+    public void addProbabilityToTableInfoStart() {
+        Consumer<RowInfoExerciseThree> consumer = row -> {
+            double numberOfWeek = (double) row.getNumberOfWeek() / total;
+            double probability = Decimal.getDecimal(2, numberOfWeek);
+            row.setProbability(probability);
+            row.setTxtProbability(String.valueOf(probability));
+        };
+        listToTableInfoStart.forEach(consumer);
     }
 }
