@@ -87,13 +87,16 @@ public class ExerciseThreePane extends MyPane {
         ObservableList<RowEnunciateTwo> items = tableEnunciateThree.getItems();
         exerciseThree.addSalesTableEnunciateThree(items, tableResultThree.getItems());
         lblResultTotal.setText("TOTAL " + exerciseThree.getResultTotal());
-        ExerciseThreePaneAssistant.show(tableResultThree, tableEnunciateThree, lblResultTotal);
+        ExerciseThreePaneAssistant.show(tableResultThree, tableEnunciateThree, lblResultTotal,
+                exerciseThree.getTimes(), exerciseThree.getWeeks(), exerciseThree.getWeeksSpecific(),
+                exerciseThree.getAverageTotal(), exerciseThree.getFunctionSales());
     }
 
     private void click_on_load_numbers() {
         try {
             List<Double> data = Util.convertToList(txtRandomNumbers.getText());
             tableEnunciateThree.setItems(exerciseThree.buildTableEnunciateThree(data));
+            MessageBox.show("Numeros cargados exitosamente", "EJERCICIO 2");
         } catch (NumberFormatException e) {
             MessageBox.show("Introducir numeros", "Entrada no valida");
         }

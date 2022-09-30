@@ -14,7 +14,8 @@ import org.genesiscode.practicesix.view.row.exerciseThree.RowResultExerciseThree
 
 public class ExerciseThreePaneAssistant {
 
-    public static void show(TableView<RowResultExerciseThree> table, TableView<RowEnunciateTwo> tableIncise, Label lblResultTotal) {
+    public static void show(TableView<RowResultExerciseThree> table, TableView<RowEnunciateTwo> tableIncise, Label lblResultTotal,
+                            int times, int weeks, String weeksSpecific, double averageTotal, double functionSales) {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Tabla de resultados");
@@ -24,9 +25,10 @@ public class ExerciseThreePaneAssistant {
         inciseResultPane.setAlignment(Pos.CENTER_RIGHT);
 
         VBox resultsPane = new VBox(10,
-                new Label(String.format("Faltantes %s veces durante las %s semanas (semana: %s)", 3, 20, "7 14 16")),
-                new Label(String.format("Venta promedio  %s calentadores/semana", 6.75)),
-                new Label(String.format("E(ventas)  %s calentadores/semana", 6.88)));
+                new Label("\t===== RESULTADOS DE LOS INCISOS ====="),
+                new Label(String.format("Faltantes %s veces durante las %s semanas (semana: %s)", times, weeks, weeksSpecific)),
+                new Label(String.format("Venta promedio  %s calentadores/semana", averageTotal)),
+                new Label(String.format("E(ventas)  %s calentadores/semana", functionSales)));
 
         VBox pane = new VBox(10, new Label("VENTA DE CALENTADORES"), new HBox(10, table, inciseResultPane), resultsPane);
 
