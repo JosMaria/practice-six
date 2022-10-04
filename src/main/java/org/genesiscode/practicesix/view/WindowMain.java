@@ -10,7 +10,7 @@ public class WindowMain extends Application {
     public void start(Stage stage) {
         MenuBarPane menuBar = new MenuBarPane();
         Scene scene = new Scene(menuBar.getMainPane());
-        stage.setTitle("Practica 6");
+        stage.setTitle("Practica 7 - PROYECTO");
         stage.setScene(scene);
         stage.show();
     }
