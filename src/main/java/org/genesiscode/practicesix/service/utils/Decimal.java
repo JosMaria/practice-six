@@ -6,7 +6,8 @@ public class Decimal {
 
     public static double getDecimal(int count, double number) {
         DecimalFormat decimalFormat = new DecimalFormat("#." + getHash(count));
-        return Double.parseDouble(decimalFormat.format(number));
+        String numberString = decimalFormat.format(number);
+        return Double.parseDouble(numberString.replace(',', '.'));
     }
 
     private static String getHash(int count) {
